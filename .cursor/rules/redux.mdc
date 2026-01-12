@@ -1,0 +1,14 @@
+---
+description: "Redux Toolkit patterns"
+globs: ["src/store/**/*.ts"]
+alwaysApply: true
+---
+
+- Use createSlice from Redux Toolkit
+- Define interfaces for state types
+- Use PayloadAction for typed actions
+- Keep slices focused on a single domain
+- Export actions and reducer from slice file
+
+- Follow guide best practices https://redux.js.org/style-guide/
+- Avoid Dispatching Many Actions Sequentially

@@ -1,0 +1,5 @@
+---
+alwaysApply: true
+---
+
+allow test files to be long.  Disable lint rules for entire file of tests: /* eslint-disable max-lines-per-function */

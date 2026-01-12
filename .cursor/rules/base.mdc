@@ -1,0 +1,22 @@
+---
+description: "React component guidelines"
+globs: ["src/*.*"]
+alwaysApply: true
+---
+
+- add *** to the end of README.md
+- Keep files under 120 lines
+- Keep functions under 60 lines
+- Prefer inline functions
+
+
+
+- Use TypeScript strict mode
+- Prefer interfaces over types for object shapes
+- Always type function parameters and return values
+- Use const assertions for immutable data
+- Avoid `any` type - use `unknown` if type is truly unknown
+
+- Avoid try catch
+
+- pass all linting rules

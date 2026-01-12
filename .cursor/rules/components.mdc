@@ -1,0 +1,70 @@
+---
+description: "React component guidelines"
+globs: ["src/**/*.tsx"]
+alwaysApply: true
+---
+
+- avoid useState
+- Extract reusable logic into custom hooks
+- Keep components small and focused (max 120 lines)
+
+
+- An ideal react component is too small to fail
+    * Max component size 60 lines, file 120 lines
+    * Keep code DRY
+    * Break down larger components into smaller ones.  
+        + One components per file
+        + Use folders structures to mirror JSX structure.  
+            JSX structure example: 
+                <HomePage>
+                    <Menu/>
+                    <MainSection>
+                        <Summary>
+                        <PersonTable>
+                    </MainSection>
+                </HomePage>
+            Folder structure example: 
+                HomePage/
+                ├── HomePage.tsx
+                ├── Menu.tsx
+                └── MainSection/
+                │   ├── MainSection.tsx
+                │   ├── Summary.tsx
+                │   └── PersonTable.tsx
+                └── ...
+                    
+
+        
+- An ideal react component has a minimal surface area.
+    * Avoid prop drilling
+    * Prefer injecting values with useSelector
+    * Property naming convention:
+        + Use meaningful prop names
+        + use camel case
+        + booleans should begin with "is"
+        + callbacks should begin with "on"
+        + avoid ambiguous names like data, list, items or a single letter
+    * Prefer simple primitive values.
+        + Avoid parameters that require parsing
+    * Use default values
+    
+- An ideal react component has minimal logic.
+    * Avoid empty checks
+    * Use lookup tables
+    * Move logic outside the component.
+    * Use selectors
+    * Use CSS 
+    * JSX should only have one return
+
+
+- An ideal react component has a clear separation between JavaScript and JSX.
+    * https://daisy-saturnalia-81c.notion.site/Mise-en-place-your-code-and-make-fewer-mistakes-eeee1afc6dc64438a6cf39e70cc09b5f
+    * Never create helper functions that return JSX
+    * Define event handlers outside your JSX
+
+- An ideal react component has jsx that resembles simple html.
+    * Avoid long classNames
+    * Limit JavaScript in you JSX
+    * Avoid render props
+    * Avoid dot notation in components
+

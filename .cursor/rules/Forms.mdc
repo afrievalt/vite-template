@@ -1,0 +1,7 @@
+---
+description: "React forms guidelines"
+globs: ["src/**/*.tsx"]
+alwaysApply: true
+---
+
+- don't use placeholders attribute
