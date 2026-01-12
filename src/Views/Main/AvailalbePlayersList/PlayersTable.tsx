@@ -50,41 +50,37 @@ export const PlayersTable: React.FC<PlayersTableProps> = ({
       <table className="min-w-full divide-y divide-gray-200">
         <thead className="bg-gray-50">
           <tr>
+            <th></th>
             <th className="px-4 py-2 text-left text-xs font-semibold tracking-wide text-gray-600 uppercase">
               Name
-            </th>
-            <th className="px-4 py-2 text-left text-xs font-semibold tracking-wide text-gray-600 uppercase">
-              Description
-            </th>
-            <th className="px-4 py-2 text-left text-xs font-semibold tracking-wide text-gray-600 uppercase">
-              Buy In
             </th>
             <th className="px-4 py-2 text-right text-xs font-semibold tracking-wide text-gray-600 uppercase">
               Total
             </th>
-            <th className="px-4 py-2 text-right text-xs font-semibold tracking-wide text-gray-600 uppercase">
-              Action
+            <th className="px-4 py-2 text-left text-xs font-semibold tracking-wide text-gray-600 uppercase">
+              Buy In
             </th>
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-200 bg-white">
           {players.map((player) => (
             <tr key={player.id}>
-              <td className="px-4 py-2 text-sm text-gray-800">{player.name}</td>
-              <td className="px-4 py-2 text-sm text-gray-600">
-                {player.description}
+              <td>
+                <button
+                  type="button"
+                  onClick={() => handleAdd(player)}
+                  className="rounded-md bg-blue-600 px-3 py-1 text-sm text-white transition-colors hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none"
+                >
+                  +
+                </button>
               </td>
-              <td className="px-4 py-2">
-                <input
-                  type="number"
-                  min="0"
-                  step="0.01"
-                  value={buyInAmounts[player.id] ?? 97}
-                  onChange={(event) =>
-                    handleBuyInChange(player.id, event.target.value)
-                  }
-                  className="w-24 rounded-md border border-gray-300 px-2 py-1 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                />
+              <td className="px-4 py-2 text-sm text-gray-800">
+                {player.name}
+                {player.description && (
+                  <span className="ml-2 text-gray-600">
+                    {player.description}
+                  </span>
+                )}
               </td>
               <td className="px-4 py-2 text-right text-sm">
                 <span
@@ -97,14 +93,17 @@ export const PlayersTable: React.FC<PlayersTableProps> = ({
                   {(totalWinnings[player.id] ?? 0).toFixed(2)}
                 </span>
               </td>
-              <td className="px-4 py-2 text-right">
-                <button
-                  type="button"
-                  onClick={() => handleAdd(player)}
-                  className="rounded-md bg-blue-600 px-3 py-1 text-sm text-white transition-colors hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none"
-                >
-                  Add
-                </button>
+              <td className="px-4 py-2">
+                <input
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  value={buyInAmounts[player.id] ?? 97}
+                  onChange={(event) =>
+                    handleBuyInChange(player.id, event.target.value)
+                  }
+                  className="w-24 rounded-md border border-gray-300 px-2 py-1 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                />
               </td>
             </tr>
           ))}
