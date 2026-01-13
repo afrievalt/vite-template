@@ -43,41 +43,59 @@ export const PlayerTableRow: React.FC<PlayerTableRowProps> = ({
 
   return (
     <tr>
-      <td className={cellClass}>
-        <input
-          type="number"
-          min="1"
-          value={player.seatNumber}
-          onChange={(event) => handleSeatChange(event.target.value)}
-          className={inputClass}
-        />
-      </td>
-      <td className={`${cellClass} text-gray-800`}>{player.name}</td>
-      <td className={`${cellClass} text-gray-600`}>{player.description}</td>
-      <td className={`${cellClass} text-right text-gray-800`}>
-        ${totalBuyIns.toFixed(2)}
-      </td>
-      {isCashOutMode && (
-        <td className={`${cellClass} text-right`}>
-          <input
-            type="number"
-            min="0"
-            step="0.01"
-            value={cashOutValue}
-            onChange={handleCashOutInputChange}
-            className={inputClass}
-          />
-        </td>
+      {isCashOutMode ? (
+        <>
+          <td className={`${cellClass} text-right`}>
+            <input
+              type="number"
+              min="0"
+              step="0.01"
+              value={cashOutValue}
+              onChange={handleCashOutInputChange}
+              className={inputClass}
+            />
+          </td>
+          <td className={`${cellClass} text-gray-800`}>
+            {player.name}
+            {player.description && (
+              <span className="ml-2 text-gray-600">{player.description}</span>
+            )}
+          </td>
+          <td className={`${cellClass} text-right text-gray-800`}>
+            ${totalBuyIns.toFixed(2)}
+          </td>
+        </>
+      ) : (
+        <>
+          <td className={`${cellClass} text-right`}>
+            <button
+              type="button"
+              onClick={() => onRebuyClick(player.playerId)}
+              className={buttonClass}
+            >
+              +
+            </button>
+          </td>
+          <td className={cellClass}>
+            <input
+              type="number"
+              min="1"
+              value={player.seatNumber}
+              onChange={(event) => handleSeatChange(event.target.value)}
+              className={inputClass}
+            />
+          </td>
+          <td className={`${cellClass} text-gray-800`}>
+            {player.name}
+            {player.description && (
+              <span className="ml-2 text-gray-600">{player.description}</span>
+            )}
+          </td>
+          <td className={`${cellClass} text-right text-gray-800`}>
+            ${totalBuyIns.toFixed(2)}
+          </td>
+        </>
       )}
-      <td className={`${cellClass} text-right`}>
-        <button
-          type="button"
-          onClick={() => onRebuyClick(player.playerId)}
-          className={buttonClass}
-        >
-          Rebuy
-        </button>
-      </td>
     </tr>
   );
 };

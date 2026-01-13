@@ -46,14 +46,20 @@ export const SelectedPlayersTable: React.FC<SelectedPlayersTableProps> = ({
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
-              <th className={headerClass}>Seat Number</th>
-              <th className={headerClass}>Name</th>
-              <th className={headerClass}>Description</th>
-              <th className={`${headerClass} text-right`}>Total Buyins</th>
-              {isCashOutMode && (
-                <th className={`${headerClass} text-right`}>Cash Out</th>
+              {isCashOutMode ? (
+                <>
+                  <th className={`${headerClass} text-right`}>Cash Out</th>
+                  <th className={headerClass}>Name</th>
+                  <th className={`${headerClass} text-right`}>Total Buyins</th>
+                </>
+              ) : (
+                <>
+                  <th className={headerClass}></th>
+                  <th className={headerClass}>Seat Number</th>
+                  <th className={headerClass}>Name</th>
+                  <th className={`${headerClass} text-right`}>Total Buyins</th>
+                </>
               )}
-              <th className={`${headerClass} text-right`}>Action</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200 bg-white">
