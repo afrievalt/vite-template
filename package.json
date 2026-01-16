@@ -15,7 +15,9 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@dataconnect/generated": "file:src/dataconnect-generated",
     "@reduxjs/toolkit": "^2.11.0",
+    "firebase": "^12.8.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-redux": "^9.2.0",

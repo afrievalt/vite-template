@@ -2,11 +2,14 @@ import React, { useCallback, useState } from 'react';
 
 import { useSessionPlayers } from '../../hooks/useSessionPlayers';
 import { useSessionSubmit } from '../../hooks/useSessionSubmit';
+import { app } from '../../utils/firebase-init';
 
 import { AddPokerSession } from './AddPokerSession/AddPokerSession';
 import { PlayersSection } from './AvailalbePlayersList/PlayersSection';
 import { SessionsList } from './Results/SessionsList';
 import type { SessionDetails } from './types';
+
+console.log(app); // temp
 
 export const Main: React.FC = () => {
   const [editingSessionId, setEditingSessionId] = useState<string | null>(null);
