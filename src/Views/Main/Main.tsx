@@ -7,6 +7,7 @@ import { app } from '../../utils/firebase-init';
 import { AddPokerSession } from './AddPokerSession/AddPokerSession';
 import { PlayersSection } from './AvailalbePlayersList/PlayersSection';
 import { SessionsList } from './Results/SessionsList';
+import { SignInStatus } from './SignInStatus';
 import type { SessionDetails } from './types';
 
 console.log(app); // temp
@@ -72,6 +73,9 @@ export const Main: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-100 py-8">
       <div className="mx-auto max-w-2xl px-4">
+        <div className="mb-4">
+          <SignInStatus />
+        </div>
         <AddPokerSession
           currentSessionId={currentSessionId}
           editingSessionId={editingSessionId}

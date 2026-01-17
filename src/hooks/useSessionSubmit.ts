@@ -1,6 +1,8 @@
 import { useAppDispatch } from '../store/hooks';
 import { updateSessionResults } from '../store/slices/resultsSlice';
 import { updateSession } from '../store/slices/sessionsSlice';
+import { store } from '../store/store';
+import { syncStoreWithFirebase } from '../utils/firebaseSync';
 import type {
   SessionDetails,
   SessionPlayerSelection,
@@ -61,6 +63,8 @@ export const useSessionSubmit = (): UseSessionSubmitResult => {
         results: resultsPayload,
       }),
     );
+
+    void syncStoreWithFirebase(store.getState());
 
     onComplete();
   };
