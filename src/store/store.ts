@@ -2,7 +2,6 @@ import { configureStore } from '@reduxjs/toolkit';
 import type { UnknownAction, Reducer } from '@reduxjs/toolkit';
 
 import { loadPersistedState, persistStore } from './persistence';
-import buyinsReducer from './slices/buyinsSlice';
 import counterReducer from './slices/counterSlice';
 import playersReducer from './slices/playersSlice';
 import type { PlayersState } from './slices/playersSlice';
@@ -13,7 +12,6 @@ import type { SessionsState } from './slices/sessionsSlice';
 
 export const store = configureStore({
   reducer: {
-    buyIns: buyinsReducer,
     counter: counterReducer,
     players: playersReducer as Reducer<
       PlayersState,

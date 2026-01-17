@@ -42,13 +42,7 @@ export interface ImportResult {
 }
 
 const validateFullStoreState = (state: RootState): boolean => {
-  return !!(
-    state.sessions &&
-    state.results &&
-    state.buyIns &&
-    state.players &&
-    state.counter
-  );
+  return !!(state.sessions && state.results && state.players && state.counter);
 };
 
 const parseFullStore = (data: StoreExportData): ImportResult => {
@@ -64,7 +58,6 @@ const parseLegacyFormat = (data: SessionExportData): ImportResult => {
       state: {
         sessions: { sessions: [] },
         results: { results: [] },
-        buyIns: { buyIns: [] },
         players: { players: [] },
         counter: { value: 0 },
       } as RootState,
@@ -75,7 +68,6 @@ const parseLegacyFormat = (data: SessionExportData): ImportResult => {
     state: {
       sessions: { sessions: data.sessions },
       results: { results: data.results },
-      buyIns: { buyIns: [] },
       players: { players: [] },
       counter: { value: 0 },
     } as RootState,

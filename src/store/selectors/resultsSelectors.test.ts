@@ -7,15 +7,14 @@ import {
   selectCalculatedResultForPlayer,
   selectLargestLoserForSession,
   selectLargestWinnerForSession,
+  selectTotalBuyInsByPlayerAndSession,
   selectTotalWinningsByPlayer,
 } from './resultsSelectors';
 
 const createMockState = (
   results: RootState['results']['results'],
-  buyIns: RootState['buyIns']['buyIns'],
   sessions: RootState['sessions']['sessions'] = [],
 ): RootState => ({
-  buyIns: { buyIns },
   counter: { value: 0 },
   players: { players: [] },
   results: { results },
@@ -24,17 +23,16 @@ const createMockState = (
 
 describe('selectCalculatedResultForPlayer', () => {
   test('should return result value when result exists', () => {
-    const state = createMockState(
-      [
-        {
-          playerId: 'player1',
-          sessionId: 'session1',
-          seatNumber: 1,
-          result: 100,
-        },
-      ],
-      [],
-    );
+    const state = createMockState([
+      {
+        playerId: 'player1',
+        sessionId: 'session1',
+        seatNumber: 1,
+        result: 100,
+        buyIns: [],
+        buyInsTimeStamp: [],
+      },
+    ]);
 
     const result = selectCalculatedResultForPlayer(
       state,
@@ -46,32 +44,16 @@ describe('selectCalculatedResultForPlayer', () => {
   });
 
   test('should calculate result from cashOut minus buyIns when result is not set', () => {
-    const state = createMockState(
-      [
-        {
-          playerId: 'player1',
-          sessionId: 'session1',
-          seatNumber: 1,
-          cashOut: 200,
-        },
-      ],
-      [
-        {
-          id: 'buyin1',
-          playerId: 'player1',
-          sessionId: 'session1',
-          dateTime: '2024-01-01T00:00:00Z',
-          amount: 50,
-        },
-        {
-          id: 'buyin2',
-          playerId: 'player1',
-          sessionId: 'session1',
-          dateTime: '2024-01-01T01:00:00Z',
-          amount: 30,
-        },
-      ],
-    );
+    const state = createMockState([
+      {
+        playerId: 'player1',
+        sessionId: 'session1',
+        seatNumber: 1,
+        cashOut: 200,
+        buyIns: [50, 30],
+        buyInsTimeStamp: ['2024-01-01T00:00:00Z', '2024-01-01T01:00:00Z'],
+      },
+    ]);
 
     const result = selectCalculatedResultForPlayer(
       state,
@@ -83,25 +65,16 @@ describe('selectCalculatedResultForPlayer', () => {
   });
 
   test('should return negative result when cashOut is less than buyIns', () => {
-    const state = createMockState(
-      [
-        {
-          playerId: 'player1',
-          sessionId: 'session1',
-          seatNumber: 1,
-          cashOut: 50,
-        },
-      ],
-      [
-        {
-          id: 'buyin1',
-          playerId: 'player1',
-          sessionId: 'session1',
-          dateTime: '2024-01-01T00:00:00Z',
-          amount: 100,
-        },
-      ],
-    );
+    const state = createMockState([
+      {
+        playerId: 'player1',
+        sessionId: 'session1',
+        seatNumber: 1,
+        cashOut: 50,
+        buyIns: [100],
+        buyInsTimeStamp: ['2024-01-01T00:00:00Z'],
+      },
+    ]);
 
     const result = selectCalculatedResultForPlayer(
       state,
@@ -113,16 +86,15 @@ describe('selectCalculatedResultForPlayer', () => {
   });
 
   test('should return undefined when result does not exist and cashOut is not set', () => {
-    const state = createMockState(
-      [
-        {
-          playerId: 'player1',
-          sessionId: 'session1',
-          seatNumber: 1,
-        },
-      ],
-      [],
-    );
+    const state = createMockState([
+      {
+        playerId: 'player1',
+        sessionId: 'session1',
+        seatNumber: 1,
+        buyIns: [],
+        buyInsTimeStamp: [],
+      },
+    ]);
 
     const result = selectCalculatedResultForPlayer(
       state,
@@ -134,7 +106,7 @@ describe('selectCalculatedResultForPlayer', () => {
   });
 
   test('should return undefined when result record does not exist', () => {
-    const state = createMockState([], []);
+    const state = createMockState([]);
 
     const result = selectCalculatedResultForPlayer(
       state,
@@ -146,26 +118,17 @@ describe('selectCalculatedResultForPlayer', () => {
   });
 
   test('should use result value even when cashOut exists', () => {
-    const state = createMockState(
-      [
-        {
-          playerId: 'player1',
-          sessionId: 'session1',
-          seatNumber: 1,
-          result: 75,
-          cashOut: 200,
-        },
-      ],
-      [
-        {
-          id: 'buyin1',
-          playerId: 'player1',
-          sessionId: 'session1',
-          dateTime: '2024-01-01T00:00:00Z',
-          amount: 50,
-        },
-      ],
-    );
+    const state = createMockState([
+      {
+        playerId: 'player1',
+        sessionId: 'session1',
+        seatNumber: 1,
+        result: 75,
+        cashOut: 200,
+        buyIns: [50],
+        buyInsTimeStamp: ['2024-01-01T00:00:00Z'],
+      },
+    ]);
 
     const result = selectCalculatedResultForPlayer(
       state,
@@ -177,39 +140,20 @@ describe('selectCalculatedResultForPlayer', () => {
   });
 
   test('should calculate result correctly with multiple buyIns', () => {
-    const state = createMockState(
-      [
-        {
-          playerId: 'player1',
-          sessionId: 'session1',
-          seatNumber: 1,
-          cashOut: 500,
-        },
-      ],
-      [
-        {
-          id: 'buyin1',
-          playerId: 'player1',
-          sessionId: 'session1',
-          dateTime: '2024-01-01T00:00:00Z',
-          amount: 100,
-        },
-        {
-          id: 'buyin2',
-          playerId: 'player1',
-          sessionId: 'session1',
-          dateTime: '2024-01-01T01:00:00Z',
-          amount: 50,
-        },
-        {
-          id: 'buyin3',
-          playerId: 'player1',
-          sessionId: 'session1',
-          dateTime: '2024-01-01T02:00:00Z',
-          amount: 75,
-        },
-      ],
-    );
+    const state = createMockState([
+      {
+        playerId: 'player1',
+        sessionId: 'session1',
+        seatNumber: 1,
+        cashOut: 500,
+        buyIns: [100, 50, 75],
+        buyInsTimeStamp: [
+          '2024-01-01T00:00:00Z',
+          '2024-01-01T01:00:00Z',
+          '2024-01-01T02:00:00Z',
+        ],
+      },
+    ]);
 
     const result = selectCalculatedResultForPlayer(
       state,
@@ -221,25 +165,16 @@ describe('selectCalculatedResultForPlayer', () => {
   });
 
   test('should handle zero cashOut correctly', () => {
-    const state = createMockState(
-      [
-        {
-          playerId: 'player1',
-          sessionId: 'session1',
-          seatNumber: 1,
-          cashOut: 0,
-        },
-      ],
-      [
-        {
-          id: 'buyin1',
-          playerId: 'player1',
-          sessionId: 'session1',
-          dateTime: '2024-01-01T00:00:00Z',
-          amount: 100,
-        },
-      ],
-    );
+    const state = createMockState([
+      {
+        playerId: 'player1',
+        sessionId: 'session1',
+        seatNumber: 1,
+        cashOut: 0,
+        buyIns: [100],
+        buyInsTimeStamp: ['2024-01-01T00:00:00Z'],
+      },
+    ]);
 
     const result = selectCalculatedResultForPlayer(
       state,
@@ -251,17 +186,16 @@ describe('selectCalculatedResultForPlayer', () => {
   });
 
   test('should handle zero buyIns correctly', () => {
-    const state = createMockState(
-      [
-        {
-          playerId: 'player1',
-          sessionId: 'session1',
-          seatNumber: 1,
-          cashOut: 100,
-        },
-      ],
-      [],
-    );
+    const state = createMockState([
+      {
+        playerId: 'player1',
+        sessionId: 'session1',
+        seatNumber: 1,
+        cashOut: 100,
+        buyIns: [],
+        buyInsTimeStamp: [],
+      },
+    ]);
 
     const result = selectCalculatedResultForPlayer(
       state,
@@ -273,31 +207,77 @@ describe('selectCalculatedResultForPlayer', () => {
   });
 });
 
+describe('selectTotalBuyInsByPlayerAndSession', () => {
+  test('should return empty object when no results exist', () => {
+    const state = createMockState([]);
+
+    const totals = selectTotalBuyInsByPlayerAndSession(state);
+
+    expect(totals).toEqual({});
+  });
+
+  test('should aggregate buyIns by session and player', () => {
+    const state = createMockState([
+      {
+        playerId: 'player1',
+        sessionId: 'session1',
+        seatNumber: 1,
+        buyIns: [50, 25],
+        buyInsTimeStamp: ['2024-01-01T00:00:00Z', '2024-01-01T01:00:00Z'],
+      },
+      {
+        playerId: 'player2',
+        sessionId: 'session1',
+        seatNumber: 2,
+        buyIns: [100],
+        buyInsTimeStamp: ['2024-01-01T02:00:00Z'],
+      },
+      {
+        playerId: 'player1',
+        sessionId: 'session2',
+        seatNumber: 1,
+        buyIns: [75],
+        buyInsTimeStamp: ['2024-01-02T00:00:00Z'],
+      },
+    ]);
+
+    const totals = selectTotalBuyInsByPlayerAndSession(state);
+
+    expect(totals).toEqual({
+      session1: { player1: 75, player2: 100 },
+      session2: { player1: 75 },
+    });
+  });
+});
+
 describe('selectLargestWinnerForSession', () => {
   test('should return player with highest positive result', () => {
-    const state = createMockState(
-      [
-        {
-          playerId: 'player1',
-          sessionId: 'session1',
-          seatNumber: 1,
-          result: 100,
-        },
-        {
-          playerId: 'player2',
-          sessionId: 'session1',
-          seatNumber: 2,
-          result: 200,
-        },
-        {
-          playerId: 'player3',
-          sessionId: 'session1',
-          seatNumber: 3,
-          result: 50,
-        },
-      ],
-      [],
-    );
+    const state = createMockState([
+      {
+        playerId: 'player1',
+        sessionId: 'session1',
+        seatNumber: 1,
+        result: 100,
+        buyIns: [],
+        buyInsTimeStamp: [],
+      },
+      {
+        playerId: 'player2',
+        sessionId: 'session1',
+        seatNumber: 2,
+        result: 200,
+        buyIns: [],
+        buyInsTimeStamp: [],
+      },
+      {
+        playerId: 'player3',
+        sessionId: 'session1',
+        seatNumber: 3,
+        result: 50,
+        buyIns: [],
+        buyInsTimeStamp: [],
+      },
+    ]);
 
     const winner = selectLargestWinnerForSession(state, 'session1');
 
@@ -305,23 +285,24 @@ describe('selectLargestWinnerForSession', () => {
   });
 
   test('should return undefined when no positive results exist', () => {
-    const state = createMockState(
-      [
-        {
-          playerId: 'player1',
-          sessionId: 'session1',
-          seatNumber: 1,
-          result: -100,
-        },
-        {
-          playerId: 'player2',
-          sessionId: 'session1',
-          seatNumber: 2,
-          result: -50,
-        },
-      ],
-      [],
-    );
+    const state = createMockState([
+      {
+        playerId: 'player1',
+        sessionId: 'session1',
+        seatNumber: 1,
+        result: -100,
+        buyIns: [],
+        buyInsTimeStamp: [],
+      },
+      {
+        playerId: 'player2',
+        sessionId: 'session1',
+        seatNumber: 2,
+        result: -50,
+        buyIns: [],
+        buyInsTimeStamp: [],
+      },
+    ]);
 
     const winner = selectLargestWinnerForSession(state, 'session1');
 
@@ -329,7 +310,7 @@ describe('selectLargestWinnerForSession', () => {
   });
 
   test('should return undefined when no results exist for session', () => {
-    const state = createMockState([], []);
+    const state = createMockState([]);
 
     const winner = selectLargestWinnerForSession(state, 'session1');
 
@@ -337,29 +318,32 @@ describe('selectLargestWinnerForSession', () => {
   });
 
   test('should handle ties by returning one of the winners', () => {
-    const state = createMockState(
-      [
-        {
-          playerId: 'player1',
-          sessionId: 'session1',
-          seatNumber: 1,
-          result: 200,
-        },
-        {
-          playerId: 'player2',
-          sessionId: 'session1',
-          seatNumber: 2,
-          result: 200,
-        },
-        {
-          playerId: 'player3',
-          sessionId: 'session1',
-          seatNumber: 3,
-          result: 100,
-        },
-      ],
-      [],
-    );
+    const state = createMockState([
+      {
+        playerId: 'player1',
+        sessionId: 'session1',
+        seatNumber: 1,
+        result: 200,
+        buyIns: [],
+        buyInsTimeStamp: [],
+      },
+      {
+        playerId: 'player2',
+        sessionId: 'session1',
+        seatNumber: 2,
+        result: 200,
+        buyIns: [],
+        buyInsTimeStamp: [],
+      },
+      {
+        playerId: 'player3',
+        sessionId: 'session1',
+        seatNumber: 3,
+        result: 100,
+        buyIns: [],
+        buyInsTimeStamp: [],
+      },
+    ]);
 
     const winner = selectLargestWinnerForSession(state, 'session1');
 
@@ -368,38 +352,24 @@ describe('selectLargestWinnerForSession', () => {
   });
 
   test('should use calculated results from cashOut and buyIns', () => {
-    const state = createMockState(
-      [
-        {
-          playerId: 'player1',
-          sessionId: 'session1',
-          seatNumber: 1,
-          cashOut: 300,
-        },
-        {
-          playerId: 'player2',
-          sessionId: 'session1',
-          seatNumber: 2,
-          cashOut: 400,
-        },
-      ],
-      [
-        {
-          id: 'buyin1',
-          playerId: 'player1',
-          sessionId: 'session1',
-          dateTime: '2024-01-01T00:00:00Z',
-          amount: 100,
-        },
-        {
-          id: 'buyin2',
-          playerId: 'player2',
-          sessionId: 'session1',
-          dateTime: '2024-01-01T00:00:00Z',
-          amount: 150,
-        },
-      ],
-    );
+    const state = createMockState([
+      {
+        playerId: 'player1',
+        sessionId: 'session1',
+        seatNumber: 1,
+        cashOut: 300,
+        buyIns: [100],
+        buyInsTimeStamp: ['2024-01-01T00:00:00Z'],
+      },
+      {
+        playerId: 'player2',
+        sessionId: 'session1',
+        seatNumber: 2,
+        cashOut: 400,
+        buyIns: [150],
+        buyInsTimeStamp: ['2024-01-01T00:00:00Z'],
+      },
+    ]);
 
     const winner = selectLargestWinnerForSession(state, 'session1');
 
@@ -407,22 +377,23 @@ describe('selectLargestWinnerForSession', () => {
   });
 
   test('should ignore undefined results', () => {
-    const state = createMockState(
-      [
-        {
-          playerId: 'player1',
-          sessionId: 'session1',
-          seatNumber: 1,
-          result: 100,
-        },
-        {
-          playerId: 'player2',
-          sessionId: 'session1',
-          seatNumber: 2,
-        },
-      ],
-      [],
-    );
+    const state = createMockState([
+      {
+        playerId: 'player1',
+        sessionId: 'session1',
+        seatNumber: 1,
+        result: 100,
+        buyIns: [],
+        buyInsTimeStamp: [],
+      },
+      {
+        playerId: 'player2',
+        sessionId: 'session1',
+        seatNumber: 2,
+        buyIns: [],
+        buyInsTimeStamp: [],
+      },
+    ]);
 
     const winner = selectLargestWinnerForSession(state, 'session1');
 
@@ -432,29 +403,32 @@ describe('selectLargestWinnerForSession', () => {
 
 describe('selectLargestLoserForSession', () => {
   test('should return player with lowest (most negative) result', () => {
-    const state = createMockState(
-      [
-        {
-          playerId: 'player1',
-          sessionId: 'session1',
-          seatNumber: 1,
-          result: -100,
-        },
-        {
-          playerId: 'player2',
-          sessionId: 'session1',
-          seatNumber: 2,
-          result: -200,
-        },
-        {
-          playerId: 'player3',
-          sessionId: 'session1',
-          seatNumber: 3,
-          result: -50,
-        },
-      ],
-      [],
-    );
+    const state = createMockState([
+      {
+        playerId: 'player1',
+        sessionId: 'session1',
+        seatNumber: 1,
+        result: -100,
+        buyIns: [],
+        buyInsTimeStamp: [],
+      },
+      {
+        playerId: 'player2',
+        sessionId: 'session1',
+        seatNumber: 2,
+        result: -200,
+        buyIns: [],
+        buyInsTimeStamp: [],
+      },
+      {
+        playerId: 'player3',
+        sessionId: 'session1',
+        seatNumber: 3,
+        result: -50,
+        buyIns: [],
+        buyInsTimeStamp: [],
+      },
+    ]);
 
     const loser = selectLargestLoserForSession(state, 'session1');
 
@@ -462,23 +436,24 @@ describe('selectLargestLoserForSession', () => {
   });
 
   test('should return undefined when no negative results exist', () => {
-    const state = createMockState(
-      [
-        {
-          playerId: 'player1',
-          sessionId: 'session1',
-          seatNumber: 1,
-          result: 100,
-        },
-        {
-          playerId: 'player2',
-          sessionId: 'session1',
-          seatNumber: 2,
-          result: 50,
-        },
-      ],
-      [],
-    );
+    const state = createMockState([
+      {
+        playerId: 'player1',
+        sessionId: 'session1',
+        seatNumber: 1,
+        result: 100,
+        buyIns: [],
+        buyInsTimeStamp: [],
+      },
+      {
+        playerId: 'player2',
+        sessionId: 'session1',
+        seatNumber: 2,
+        result: 50,
+        buyIns: [],
+        buyInsTimeStamp: [],
+      },
+    ]);
 
     const loser = selectLargestLoserForSession(state, 'session1');
 
@@ -486,7 +461,7 @@ describe('selectLargestLoserForSession', () => {
   });
 
   test('should return undefined when no results exist for session', () => {
-    const state = createMockState([], []);
+    const state = createMockState([]);
 
     const loser = selectLargestLoserForSession(state, 'session1');
 
@@ -494,29 +469,32 @@ describe('selectLargestLoserForSession', () => {
   });
 
   test('should handle ties by returning one of the losers', () => {
-    const state = createMockState(
-      [
-        {
-          playerId: 'player1',
-          sessionId: 'session1',
-          seatNumber: 1,
-          result: -200,
-        },
-        {
-          playerId: 'player2',
-          sessionId: 'session1',
-          seatNumber: 2,
-          result: -200,
-        },
-        {
-          playerId: 'player3',
-          sessionId: 'session1',
-          seatNumber: 3,
-          result: -100,
-        },
-      ],
-      [],
-    );
+    const state = createMockState([
+      {
+        playerId: 'player1',
+        sessionId: 'session1',
+        seatNumber: 1,
+        result: -200,
+        buyIns: [],
+        buyInsTimeStamp: [],
+      },
+      {
+        playerId: 'player2',
+        sessionId: 'session1',
+        seatNumber: 2,
+        result: -200,
+        buyIns: [],
+        buyInsTimeStamp: [],
+      },
+      {
+        playerId: 'player3',
+        sessionId: 'session1',
+        seatNumber: 3,
+        result: -100,
+        buyIns: [],
+        buyInsTimeStamp: [],
+      },
+    ]);
 
     const loser = selectLargestLoserForSession(state, 'session1');
 
@@ -525,38 +503,24 @@ describe('selectLargestLoserForSession', () => {
   });
 
   test('should use calculated results from cashOut and buyIns', () => {
-    const state = createMockState(
-      [
-        {
-          playerId: 'player1',
-          sessionId: 'session1',
-          seatNumber: 1,
-          cashOut: 50,
-        },
-        {
-          playerId: 'player2',
-          sessionId: 'session1',
-          seatNumber: 2,
-          cashOut: 100,
-        },
-      ],
-      [
-        {
-          id: 'buyin1',
-          playerId: 'player1',
-          sessionId: 'session1',
-          dateTime: '2024-01-01T00:00:00Z',
-          amount: 200,
-        },
-        {
-          id: 'buyin2',
-          playerId: 'player2',
-          sessionId: 'session1',
-          dateTime: '2024-01-01T00:00:00Z',
-          amount: 300,
-        },
-      ],
-    );
+    const state = createMockState([
+      {
+        playerId: 'player1',
+        sessionId: 'session1',
+        seatNumber: 1,
+        cashOut: 50,
+        buyIns: [200],
+        buyInsTimeStamp: ['2024-01-01T00:00:00Z'],
+      },
+      {
+        playerId: 'player2',
+        sessionId: 'session1',
+        seatNumber: 2,
+        cashOut: 100,
+        buyIns: [300],
+        buyInsTimeStamp: ['2024-01-01T00:00:00Z'],
+      },
+    ]);
 
     const loser = selectLargestLoserForSession(state, 'session1');
 
@@ -564,22 +528,23 @@ describe('selectLargestLoserForSession', () => {
   });
 
   test('should ignore undefined results', () => {
-    const state = createMockState(
-      [
-        {
-          playerId: 'player1',
-          sessionId: 'session1',
-          seatNumber: 1,
-          result: -100,
-        },
-        {
-          playerId: 'player2',
-          sessionId: 'session1',
-          seatNumber: 2,
-        },
-      ],
-      [],
-    );
+    const state = createMockState([
+      {
+        playerId: 'player1',
+        sessionId: 'session1',
+        seatNumber: 1,
+        result: -100,
+        buyIns: [],
+        buyInsTimeStamp: [],
+      },
+      {
+        playerId: 'player2',
+        sessionId: 'session1',
+        seatNumber: 2,
+        buyIns: [],
+        buyInsTimeStamp: [],
+      },
+    ]);
 
     const loser = selectLargestLoserForSession(state, 'session1');
 
@@ -589,7 +554,7 @@ describe('selectLargestLoserForSession', () => {
 
 describe('selectTotalWinningsByPlayer', () => {
   test('should return empty object when no sessions exist', () => {
-    const state = createMockState([], [], []);
+    const state = createMockState([], []);
 
     const totals = selectTotalWinningsByPlayer(state);
 
@@ -604,15 +569,18 @@ describe('selectTotalWinningsByPlayer', () => {
           sessionId: 'session1',
           seatNumber: 1,
           result: 100,
+          buyIns: [],
+          buyInsTimeStamp: [],
         },
         {
           playerId: 'player1',
           sessionId: 'session2',
           seatNumber: 1,
           result: 50,
+          buyIns: [],
+          buyInsTimeStamp: [],
         },
       ],
-      [],
       [
         {
           id: 'session1',
@@ -644,27 +612,34 @@ describe('selectTotalWinningsByPlayer', () => {
           sessionId: 'session1',
           seatNumber: 1,
           result: 100,
+          buyIns: [],
+          buyInsTimeStamp: [],
         },
         {
           playerId: 'player2',
           sessionId: 'session1',
           seatNumber: 2,
           result: -50,
+          buyIns: [],
+          buyInsTimeStamp: [],
         },
         {
           playerId: 'player1',
           sessionId: 'session2',
           seatNumber: 1,
           result: 75,
+          buyIns: [],
+          buyInsTimeStamp: [],
         },
         {
           playerId: 'player2',
           sessionId: 'session2',
           seatNumber: 2,
           result: -25,
+          buyIns: [],
+          buyInsTimeStamp: [],
         },
       ],
-      [],
       [
         {
           id: 'session1',
@@ -696,28 +671,16 @@ describe('selectTotalWinningsByPlayer', () => {
           sessionId: 'session1',
           seatNumber: 1,
           cashOut: 200,
+          buyIns: [100],
+          buyInsTimeStamp: ['2024-01-01T00:00:00Z'],
         },
         {
           playerId: 'player1',
           sessionId: 'session2',
           seatNumber: 1,
           cashOut: 150,
-        },
-      ],
-      [
-        {
-          id: 'buyin1',
-          playerId: 'player1',
-          sessionId: 'session1',
-          dateTime: '2024-01-01T00:00:00Z',
-          amount: 100,
-        },
-        {
-          id: 'buyin2',
-          playerId: 'player1',
-          sessionId: 'session2',
-          dateTime: '2024-01-02T00:00:00Z',
-          amount: 50,
+          buyIns: [50],
+          buyInsTimeStamp: ['2024-01-02T00:00:00Z'],
         },
       ],
       [
@@ -751,14 +714,17 @@ describe('selectTotalWinningsByPlayer', () => {
           sessionId: 'session1',
           seatNumber: 1,
           result: 100,
+          buyIns: [],
+          buyInsTimeStamp: [],
         },
         {
           playerId: 'player2',
           sessionId: 'session1',
           seatNumber: 2,
+          buyIns: [],
+          buyInsTimeStamp: [],
         },
       ],
-      [],
       [
         {
           id: 'session1',
@@ -783,15 +749,18 @@ describe('selectTotalWinningsByPlayer', () => {
           sessionId: 'session1',
           seatNumber: 1,
           result: -100,
+          buyIns: [],
+          buyInsTimeStamp: [],
         },
         {
           playerId: 'player1',
           sessionId: 'session2',
           seatNumber: 1,
           result: -50,
+          buyIns: [],
+          buyInsTimeStamp: [],
         },
       ],
-      [],
       [
         {
           id: 'session1',
@@ -823,21 +792,26 @@ describe('selectTotalWinningsByPlayer', () => {
           sessionId: 'session1',
           seatNumber: 1,
           result: 200,
+          buyIns: [],
+          buyInsTimeStamp: [],
         },
         {
           playerId: 'player1',
           sessionId: 'session2',
           seatNumber: 1,
           result: -100,
+          buyIns: [],
+          buyInsTimeStamp: [],
         },
         {
           playerId: 'player1',
           sessionId: 'session3',
           seatNumber: 1,
           result: 50,
+          buyIns: [],
+          buyInsTimeStamp: [],
         },
       ],
-      [],
       [
         {
           id: 'session1',

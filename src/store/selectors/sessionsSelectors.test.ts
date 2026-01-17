@@ -9,9 +9,7 @@ const createMockState = (
   sessions: RootState['sessions']['sessions'],
   results: RootState['results']['results'],
   players: RootState['players']['players'],
-  buyIns: RootState['buyIns']['buyIns'],
 ): RootState => ({
-  buyIns: { buyIns },
   counter: { value: 0 },
   players: { players },
   results: { results },
@@ -20,7 +18,7 @@ const createMockState = (
 
 describe('selectSessionRows', () => {
   test('should return empty array when no sessions exist', () => {
-    const state = createMockState([], [], [], []);
+    const state = createMockState([], [], []);
 
     const rows = selectSessionRows(state);
 
@@ -44,24 +42,32 @@ describe('selectSessionRows', () => {
           sessionId: 'session1',
           seatNumber: 1,
           result: 200,
+          buyIns: [],
+          buyInsTimeStamp: [],
         },
         {
           playerId: 'player2',
           sessionId: 'session1',
           seatNumber: 2,
           result: -100,
+          buyIns: [],
+          buyInsTimeStamp: [],
         },
         {
           playerId: 'player3',
           sessionId: 'session1',
           seatNumber: 3,
           result: 50,
+          buyIns: [],
+          buyInsTimeStamp: [],
         },
         {
           playerId: 'player4',
           sessionId: 'session1',
           seatNumber: 4,
           result: -150,
+          buyIns: [],
+          buyInsTimeStamp: [],
         },
       ],
       [
@@ -70,7 +76,6 @@ describe('selectSessionRows', () => {
         { id: 'player3', name: 'SmallWinner', description: '' },
         { id: 'player4', name: 'BigLoser', description: 'ME' },
       ],
-      [],
     );
 
     const rows = selectSessionRows(state);
@@ -100,33 +105,21 @@ describe('selectSessionRows', () => {
           sessionId: 'session1',
           seatNumber: 1,
           cashOut: 300,
+          buyIns: [100],
+          buyInsTimeStamp: ['2024-01-01T00:00:00Z'],
         },
         {
           playerId: 'player2',
           sessionId: 'session1',
           seatNumber: 2,
           cashOut: 50,
+          buyIns: [200],
+          buyInsTimeStamp: ['2024-01-01T00:00:00Z'],
         },
       ],
       [
         { id: 'player1', name: 'Player1', description: '' },
         { id: 'player2', name: 'Player2', description: 'ME' },
-      ],
-      [
-        {
-          id: 'buyin1',
-          playerId: 'player1',
-          sessionId: 'session1',
-          dateTime: '2024-01-01T00:00:00Z',
-          amount: 100,
-        },
-        {
-          id: 'buyin2',
-          playerId: 'player2',
-          sessionId: 'session1',
-          dateTime: '2024-01-01T00:00:00Z',
-          amount: 200,
-        },
       ],
     );
 
@@ -149,7 +142,6 @@ describe('selectSessionRows', () => {
           stakes: '1/2',
         },
       ],
-      [],
       [],
       [],
     );
@@ -177,9 +169,10 @@ describe('selectSessionRows', () => {
           sessionId: 'session1',
           seatNumber: 1,
           result: 100,
+          buyIns: [],
+          buyInsTimeStamp: [],
         },
       ],
-      [],
       [],
     );
 
@@ -207,19 +200,22 @@ describe('selectSessionRows', () => {
           sessionId: 'session1',
           seatNumber: 1,
           result: 200,
+          buyIns: [],
+          buyInsTimeStamp: [],
         },
         {
           playerId: 'player2',
           sessionId: 'session1',
           seatNumber: 2,
           result: -100,
+          buyIns: [],
+          buyInsTimeStamp: [],
         },
       ],
       [
         { id: 'player1', name: 'ME', description: 'ME' },
         { id: 'player2', name: 'Other', description: '' },
       ],
-      [],
     );
 
     const rows = selectSessionRows(state);
@@ -254,19 +250,22 @@ describe('selectSessionRows', () => {
           sessionId: 'session1',
           seatNumber: 1,
           result: 100,
+          buyIns: [],
+          buyInsTimeStamp: [],
         },
         {
           playerId: 'player2',
           sessionId: 'session2',
           seatNumber: 1,
           result: 200,
+          buyIns: [],
+          buyInsTimeStamp: [],
         },
       ],
       [
         { id: 'player1', name: 'Player1', description: '' },
         { id: 'player2', name: 'Player2', description: '' },
       ],
-      [],
     );
 
     const rows = selectSessionRows(state);
@@ -295,19 +294,22 @@ describe('selectSessionRows', () => {
           sessionId: 'session1',
           seatNumber: 1,
           result: 100,
+          buyIns: [],
+          buyInsTimeStamp: [],
         },
         {
           playerId: 'player2',
           sessionId: 'session1',
           seatNumber: 2,
           result: 50,
+          buyIns: [],
+          buyInsTimeStamp: [],
         },
       ],
       [
         { id: 'player1', name: 'Player1', description: '' },
         { id: 'player2', name: 'Player2', description: 'ME' },
       ],
-      [],
     );
 
     const rows = selectSessionRows(state);
@@ -335,19 +337,22 @@ describe('selectSessionRows', () => {
           sessionId: 'session1',
           seatNumber: 1,
           result: -100,
+          buyIns: [],
+          buyInsTimeStamp: [],
         },
         {
           playerId: 'player2',
           sessionId: 'session1',
           seatNumber: 2,
           result: -50,
+          buyIns: [],
+          buyInsTimeStamp: [],
         },
       ],
       [
         { id: 'player1', name: 'Player1', description: 'ME' },
         { id: 'player2', name: 'Player2', description: '' },
       ],
-      [],
     );
 
     const rows = selectSessionRows(state);

@@ -2,7 +2,27 @@ import { createSelector } from '@reduxjs/toolkit';
 
 import type { RootState } from '../store';
 
-import { selectTotalBuyInsByPlayerAndSession } from './buyinsSelectors';
+export const selectTotalBuyInsByPlayerAndSession = createSelector(
+  [(state: RootState) => state.results.results],
+  (results) => {
+    const totals: Record<string, Record<string, number>> = {};
+    results.forEach((result) => {
+      const { sessionId, buyIns = [], playerId } = result;
+
+      if (!totals[sessionId]) {
+        totals[sessionId] = {};
+      }
+      if (!totals[sessionId][playerId]) {
+        totals[sessionId][playerId] = 0;
+      }
+      totals[sessionId][playerId] += buyIns.reduce(
+        (sum, amount) => sum + amount,
+        0,
+      );
+    });
+    return totals;
+  },
+);
 
 export const selectCalculatedResultForPlayer = (
   state: RootState,
@@ -25,10 +45,12 @@ export const selectCalculatedResultForPlayer = (
     return undefined;
   }
 
-  const buyInsTotals = selectTotalBuyInsByPlayerAndSession(state);
-  const buyIns = buyInsTotals[sessionId]?.[playerId] ?? 0;
+  const buyInsTotal = (result.buyIns ?? []).reduce(
+    (sum, amount) => sum + amount,
+    0,
+  );
 
-  return result.cashOut - buyIns;
+  return result.cashOut - buyInsTotal;
 };
 
 export const selectLargestWinnerForSession = (
@@ -113,16 +135,14 @@ export const selectTotalWinningsByPlayer = createSelector(
   [
     (state: RootState) => state.sessions.sessions,
     (state: RootState) => state.results.results,
-    (state: RootState) => state.buyIns.buyIns,
   ],
-  (sessions, results, buyIns): Record<string, number> => {
+  (sessions, results): Record<string, number> => {
     const totals: Record<string, number> = {};
 
     const fullState = {
       sessions: { sessions },
       results: { results },
       players: { players: [] },
-      buyIns: { buyIns },
       counter: { value: 0 },
     } as RootState;
 

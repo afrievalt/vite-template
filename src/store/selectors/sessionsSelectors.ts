@@ -22,14 +22,12 @@ export const selectSessionRows = createSelector(
     (state: RootState) => state.sessions.sessions,
     (state: RootState) => state.results.results,
     (state: RootState) => state.players.players,
-    (state: RootState) => state.buyIns.buyIns,
   ],
-  (sessions, results, players, buyIns): SessionRow[] => {
+  (sessions, results, players): SessionRow[] => {
     const partialState = {
       sessions: { sessions },
       results: { results },
       players: { players },
-      buyIns: { buyIns },
     } as RootState;
 
     return sessions.map((session) => {

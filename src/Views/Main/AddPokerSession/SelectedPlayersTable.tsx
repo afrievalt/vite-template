@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react';
 
 import { useAppSelector } from '../../../store/hooks';
-import { selectTotalBuyInsByPlayerAndSession } from '../../../store/selectors/buyinsSelectors';
+import { selectTotalBuyInsByPlayerAndSession } from '../../../store/selectors/resultsSelectors';
 import type { SessionPlayerSelection } from '../types';
 
 import { PlayerTableRow } from './PlayerTableRow';

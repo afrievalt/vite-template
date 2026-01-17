@@ -2,8 +2,8 @@
 import { useEffect, useState } from 'react';
 
 import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { addBuyInWithId } from '../store/slices/buyinsSlice';
 import type { Player } from '../store/slices/playersSlice';
+import { addBuyInToResult } from '../store/slices/resultsSlice';
 import { addSession } from '../store/slices/sessionsSlice';
 import { generateUUID } from '../utils/uuid';
 import type {
@@ -92,17 +92,17 @@ export const useSessionPlayers = (
       );
       onSessionCreated(targetSessionId);
     }
+    const nextSeatNumber = selectedPlayers.length + 1;
     dispatch(
-      addBuyInWithId({
-        id: generateUUID(),
+      addBuyInToResult({
         playerId: player.id,
         sessionId: targetSessionId,
         amount: buyInAmount,
+        seatNumber: nextSeatNumber,
       }),
     );
 
     setSelectedPlayers((prev) => {
-      const nextSeatNumber = prev.length + 1;
       const newSelection: SessionPlayerSelection = {
         playerId: player.id,
         name: player.name,
@@ -121,8 +121,7 @@ export const useSessionPlayers = (
     if (!targetSessionId) return;
 
     dispatch(
-      addBuyInWithId({
-        id: generateUUID(),
+      addBuyInToResult({
         playerId,
         sessionId: targetSessionId,
         amount: buyInAmount,

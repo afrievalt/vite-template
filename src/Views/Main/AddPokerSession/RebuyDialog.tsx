@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 
 import { useAppDispatch } from '../../../store/hooks';
-import { addBuyInWithId } from '../../../store/slices/buyinsSlice';
-import { generateUUID } from '../../../utils/uuid';
+import { addBuyInToResult } from '../../../store/slices/resultsSlice';
 
 interface RebuyDialogProps {
   isOpen: boolean;
@@ -45,8 +44,7 @@ export const RebuyDialog: React.FC<RebuyDialogProps> = ({
   const handleRebuy = (amount: number) => {
     if (!sessionId) return;
     dispatch(
-      addBuyInWithId({
-        id: generateUUID(),
+      addBuyInToResult({
         playerId,
         sessionId,
         amount,

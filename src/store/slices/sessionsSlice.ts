@@ -24,7 +24,6 @@ export interface ImportStorePayload {
   state: {
     sessions: SessionsState;
     results: { results: unknown[] };
-    buyIns: { buyIns: unknown[] };
     players: { players: unknown[] };
     counter: { value: number };
   };
