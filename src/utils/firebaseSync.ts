@@ -1,4 +1,4 @@
-import { getDatabase, ref, set } from 'firebase/database';
+import { getDatabase, ref, set, get } from 'firebase/database';
 import type { Database } from 'firebase/database';
 
 import type { RootState } from '../store/store';
@@ -42,4 +42,21 @@ export const syncStoreWithFirebase = async (
     state: sanitizeStateForFirebase(state),
     lastSyncedAt: new Date().toISOString(),
   });
+};
+
+export const fetchStoreFromFirebase = async (): Promise<RootState | null> => {
+  if (!auth.currentUser) {
+    return null;
+  }
+  const database = getDatabaseInstance();
+  if (!database) {
+    return null;
+  }
+
+  const snapshot = await get(ref(database, STORE_STATE_PATH));
+  if (snapshot.exists()) {
+    const data = snapshot.val();
+    return data.state as RootState;
+  }
+  return null;
 };

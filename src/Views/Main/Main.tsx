@@ -1,8 +1,8 @@
 import React, { useCallback, useState } from 'react';
 
+import { useFirebaseDataImport } from '../../hooks/useFirebaseDataImport';
 import { useSessionPlayers } from '../../hooks/useSessionPlayers';
 import { useSessionSubmit } from '../../hooks/useSessionSubmit';
-import { app } from '../../utils/firebase-init';
 
 import { AddPokerSession } from './AddPokerSession/AddPokerSession';
 import { PlayersSection } from './AvailalbePlayersList/PlayersSection';
@@ -10,9 +10,8 @@ import { SessionsList } from './Results/SessionsList';
 import { SignInStatus } from './SignInStatus';
 import type { SessionDetails } from './types';
 
-console.log(app); // temp
-
 export const Main: React.FC = () => {
+  useFirebaseDataImport();
   const [editingSessionId, setEditingSessionId] = useState<string | null>(null);
   const [currentSessionId, setCurrentSessionId] = useState<string | null>(null);
   const [sessionDetails, setSessionDetails] = useState<SessionDetails>({
