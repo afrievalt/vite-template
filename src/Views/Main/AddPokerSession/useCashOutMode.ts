@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import type { SessionPlayerSelection } from '../types';
 
@@ -11,11 +11,26 @@ interface UseCashOutModeResult {
   cashOutValues: CashOutValues;
   handleCashOutClick: (players: SessionPlayerSelection[]) => void;
   handleCashOutChange: (playerId: string, value: number) => void;
+  resetCashOutMode: () => void;
 }
 
-export const useCashOutMode = (): UseCashOutModeResult => {
+export const useCashOutMode = (
+  currentSessionId: string | null,
+  editingSessionId: string | null,
+): UseCashOutModeResult => {
   const [isCashOutMode, setIsCashOutMode] = useState(false);
   const [cashOutValues, setCashOutValues] = useState<CashOutValues>({});
+
+  const resetCashOutMode = useCallback(() => {
+    setIsCashOutMode(false);
+    setCashOutValues({});
+  }, []);
+
+  useEffect(() => {
+    if (!currentSessionId && !editingSessionId) {
+      resetCashOutMode();
+    }
+  }, [currentSessionId, editingSessionId, resetCashOutMode]);
 
   const handleCashOutClick = (players: SessionPlayerSelection[]) => {
     setIsCashOutMode(true);
@@ -38,5 +53,6 @@ export const useCashOutMode = (): UseCashOutModeResult => {
     cashOutValues,
     handleCashOutClick,
     handleCashOutChange,
+    resetCashOutMode,
   };
 };

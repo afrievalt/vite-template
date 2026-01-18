@@ -43,7 +43,7 @@ export const AddPokerSession: React.FC<SessionFormProps> = ({
     cashOutValues,
     handleCashOutClick,
     handleCashOutChange,
-  } = useCashOutMode();
+  } = useCashOutMode(currentSessionId, editingSessionId);
 
   const {
     date,
