@@ -15,5 +15,11 @@ export const useFirebaseAuth = () => {
     return unsubscribe;
   }, []);
 
-  return { user, initializing };
+  const content = initializing
+    ? 'Checking auth...'
+    : user
+      ? user.displayName || user.email || 'Signed in'
+      : 'Not signed in';
+
+  return { user, initializing, content };
 };

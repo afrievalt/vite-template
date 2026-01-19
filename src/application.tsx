@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import { HamburgerMenu } from './components/Navigation/HamburgerMenu';
+import { SignInStatus } from './components/Navigation/SignInStatus';
 import Main from './Views/Main/Main';
 import Reports from './Views/Reports/Reports';
 
@@ -14,10 +15,13 @@ export const Application = () => {
           <span className="text-xl font-bold text-indigo-600">
             Poker Tracker
           </span>
-          <HamburgerMenu
-            currentView={currentView}
-            onNavigate={(view) => setCurrentView(view)}
-          />
+          <div className="flex items-center">
+            <SignInStatus />
+            <HamburgerMenu
+              currentView={currentView}
+              onNavigate={(view) => setCurrentView(view)}
+            />
+          </div>
         </div>
       </nav>
       {currentView === 'Main' ? <Main /> : <Reports />}

@@ -7,7 +7,6 @@ import { useSessionSubmit } from '../../hooks/useSessionSubmit';
 import { AddPokerSession } from './AddPokerSession/AddPokerSession';
 import { PlayersSection } from './AvailalbePlayersList/PlayersSection';
 import { SessionsList } from './Results/SessionsList';
-import { SignInStatus } from './SignInStatus';
 import type { SessionDetails } from './types';
 
 export const Main: React.FC = () => {
@@ -72,7 +71,6 @@ export const Main: React.FC = () => {
   return (
     <div className="pb-8">
       <div className="mx-auto max-w-2xl px-0 sm:px-4">
-        <SignInStatus />
         <AddPokerSession
           currentSessionId={currentSessionId}
           editingSessionId={editingSessionId}

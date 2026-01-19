@@ -20,3 +20,4 @@ alwaysApply: true
 - Avoid try catch
 
 - pass all linting rules
+- always run linter as last step and fix any issues
