@@ -1,7 +1,9 @@
-use firebase data
-[] remove card / margin in mobile
+[] fix saved sessions report format
+[] move signout to hamburger menu
 [] fix edit (allow edit of rebuy)
 [] create a skip
+
+[] fix ../../component import
 
 [] auto fix on save
 [] remove prop drilling
@@ -16,3 +18,5 @@ use firebase data
 
 [x] data entry
 [x] reports (filter by game)
+[x] use firebase data
+[x] remove card / margin in mobile

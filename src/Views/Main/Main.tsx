@@ -71,10 +71,8 @@ export const Main: React.FC = () => {
 
   return (
     <div className="pb-8">
-      <div className="mx-auto max-w-2xl px-4">
-        <div className="mb-4">
-          <SignInStatus />
-        </div>
+      <div className="mx-auto max-w-2xl px-0 sm:px-4">
+        <SignInStatus />
         <AddPokerSession
           currentSessionId={currentSessionId}
           editingSessionId={editingSessionId}

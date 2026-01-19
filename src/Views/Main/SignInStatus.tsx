@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { MainCard } from '../../components/MainCard';
 import { useFirebaseAuth } from '../../hooks/useFirebaseAuth';
 import {
   signInWithGoogle,
@@ -25,7 +26,7 @@ export const SignInStatus: React.FC = () => {
   const userLabel = user?.displayName ?? user?.email ?? 'Authenticated user';
 
   return (
-    <div className="flex h-full flex-col gap-2 rounded-lg border border-gray-200 bg-white p-4">
+    <MainCard className="flex h-full flex-col gap-2">
       {initializing ? (
         <p className="text-sm text-gray-500">Checking authentication…</p>
       ) : user ? (
@@ -58,6 +59,6 @@ export const SignInStatus: React.FC = () => {
           </button>
         </>
       )}
-    </div>
+    </MainCard>
   );
 };

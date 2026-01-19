@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 
+import { MainCard } from '../../../components/MainCard';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { addPlayer, type Player } from '../../../store/slices/playersSlice';
 import { generateUUID } from '../../../utils/uuid';
@@ -42,7 +43,7 @@ export const PlayersSection: React.FC<PlayersSectionProps> = ({
   );
 
   return (
-    <div className="mb-6 rounded-lg bg-white p-6 shadow-md">
+    <MainCard>
       <h2 className="mb-4 text-xl font-bold text-gray-800">Players</h2>
       <PlayersForm
         name={name}
@@ -54,6 +55,6 @@ export const PlayersSection: React.FC<PlayersSectionProps> = ({
       <div className="mt-4">
         <PlayersTable players={availablePlayers} onAdd={onAddToSession} />
       </div>
-    </div>
+    </MainCard>
   );
 };

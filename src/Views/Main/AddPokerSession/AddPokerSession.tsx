@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { MainCard } from '../../../components/MainCard';
 import { useEditingSession } from '../../../hooks/useEditingSession';
 import { useSessionDetailsSync } from '../../../hooks/useSessionDetailsSync';
 import { useSessionForm } from '../../../hooks/useSessionForm';
@@ -81,7 +82,7 @@ export const AddPokerSession: React.FC<SessionFormProps> = ({
   };
 
   return (
-    <div className="mb-6 rounded-lg bg-white p-6 shadow-md">
+    <MainCard>
       <h2 className="mb-6 text-2xl font-bold text-gray-800">
         {isEditing ? 'Edit Poker Session' : 'Add Poker Session'}
       </h2>
@@ -110,6 +111,6 @@ export const AddPokerSession: React.FC<SessionFormProps> = ({
           onCancelEdit={onCancelEdit}
         />
       </form>
-    </div>
+    </MainCard>
   );
 };

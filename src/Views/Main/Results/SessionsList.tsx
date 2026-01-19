@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 
+import { MainCard } from '../../../components/MainCard';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { selectSessionRows } from '../../../store/selectors/sessionsSelectors';
 import {
@@ -55,7 +56,7 @@ export const SessionsList: React.FC<SessionsListProps> = ({
 
   if (rows.length === 0) {
     return (
-      <div className="rounded-lg bg-white p-6 shadow-md">
+      <MainCard>
         <SessionsListHeader
           onExport={handleExport}
           onImportClick={handleImportClick}
@@ -63,12 +64,12 @@ export const SessionsList: React.FC<SessionsListProps> = ({
           onFileChange={handleFileChange}
         />
         <p className="text-gray-500">No sessions yet</p>
-      </div>
+      </MainCard>
     );
   }
 
   return (
-    <div className="rounded-lg bg-white p-6 shadow-md">
+    <MainCard>
       <SessionsListHeader
         onExport={handleExport}
         onImportClick={handleImportClick}
@@ -85,6 +86,6 @@ export const SessionsList: React.FC<SessionsListProps> = ({
           />
         ))}
       </ul>
-    </div>
+    </MainCard>
   );
 };

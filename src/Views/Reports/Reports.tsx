@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from 'react';
 
+import { MainCard } from '../../components/MainCard';
 import { useAppSelector } from '../../store/hooks';
 import { selectSessionRows } from '../../store/selectors/sessionsSelectors';
 import type { SessionRow } from '../../store/selectors/sessionsSelectors';
@@ -9,7 +10,7 @@ const GameFilter: React.FC<{
   onGameChange: (game: string) => void;
   games: string[];
 }> = ({ selectedGame, onGameChange, games }) => (
-  <div className="mb-6 rounded-lg bg-white p-6 shadow-md">
+  <MainCard>
     <label
       htmlFor="game-filter"
       className="mb-2 block text-sm font-medium text-gray-700"
@@ -28,14 +29,14 @@ const GameFilter: React.FC<{
         </option>
       ))}
     </select>
-  </div>
+  </MainCard>
 );
 
 const ReportSummary: React.FC<{ profit: number; count: number }> = ({
   profit,
   count,
 }) => (
-  <div className="mb-6 rounded-lg bg-white p-6 shadow-md">
+  <MainCard>
     <div className="flex items-center justify-between">
       <span className="text-lg font-medium text-gray-700">
         Total Profit/Loss:
@@ -47,7 +48,7 @@ const ReportSummary: React.FC<{ profit: number; count: number }> = ({
       </span>
     </div>
     <div className="mt-2 text-sm text-gray-500">{count} sessions filtered</div>
-  </div>
+  </MainCard>
 );
 
 const ReportSessionRow: React.FC<{
@@ -58,7 +59,7 @@ const ReportSessionRow: React.FC<{
     ? session.players.find((p) => p.id === mePlayerId)
     : null;
   return (
-    <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
+    <MainCard className="mb-0 sm:mb-0">
       <div className="mb-2 flex items-center justify-between">
         <span className="font-semibold text-gray-800">{session.date}</span>
         <span className="text-sm text-gray-500">{session.game}</span>
@@ -81,7 +82,7 @@ const ReportSessionRow: React.FC<{
           </span>
         </div>
       )}
-    </div>
+    </MainCard>
   );
 };
 
@@ -116,8 +117,10 @@ export const Reports: React.FC = () => {
 
   return (
     <div className="pb-8">
-      <div className="mx-auto max-w-2xl px-4">
-        <h1 className="mb-6 text-2xl font-bold text-gray-800">Reports</h1>
+      <div className="mx-auto max-w-2xl px-0 sm:px-4">
+        <h1 className="mb-6 px-4 text-2xl font-bold text-gray-800 sm:px-0">
+          Reports
+        </h1>
         <GameFilter
           games={games}
           selectedGame={selectedGame}
@@ -133,9 +136,9 @@ export const Reports: React.FC = () => {
             />
           ))}
           {filteredRows.length === 0 && (
-            <div className="py-8 text-center text-gray-500">
+            <MainCard className="text-center text-gray-500">
               No sessions match the filter
-            </div>
+            </MainCard>
           )}
         </div>
       </div>
