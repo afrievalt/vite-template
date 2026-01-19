@@ -70,7 +70,7 @@ export const Main: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 py-8">
+    <div className="pb-8">
       <div className="mx-auto max-w-2xl px-4">
         <div className="mb-4">
           <SignInStatus />
