@@ -30,7 +30,7 @@ export const selectSessionRows = createSelector(
       players: { players },
     } as RootState;
 
-    return sessions.map((session) => {
+    return [...sessions].reverse().map((session) => {
       const sessionResults = results.filter(
         (result) => result.sessionId === session.id,
       );

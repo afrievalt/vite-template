@@ -1,5 +1,4 @@
 [] fix saved sessions report format
-[] move signout to hamburger menu
 [] fix edit (allow edit of rebuy)
 [] create a skip
 
@@ -20,3 +19,4 @@
 [x] reports (filter by game)
 [x] use firebase data
 [x] remove card / margin in mobile
+[x] move signout to hamburger menu

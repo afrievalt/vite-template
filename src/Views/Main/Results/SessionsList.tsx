@@ -54,20 +54,6 @@ export const SessionsList: React.FC<SessionsListProps> = ({
     }
   };
 
-  if (rows.length === 0) {
-    return (
-      <MainCard>
-        <SessionsListHeader
-          onExport={handleExport}
-          onImportClick={handleImportClick}
-          fileInputRef={fileInputRef}
-          onFileChange={handleFileChange}
-        />
-        <p className="text-gray-500">No sessions yet</p>
-      </MainCard>
-    );
-  }
-
   return (
     <MainCard>
       <SessionsListHeader
