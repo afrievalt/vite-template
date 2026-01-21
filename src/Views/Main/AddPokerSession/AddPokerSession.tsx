@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useEffect, useMemo } from 'react';
+import { FormProvider, useForm, useWatch } from 'react-hook-form';
 
 import { MainCard } from '../../../components/MainCard';
 import { useEditingSession } from '../../../hooks/useEditingSession';
 import { useSessionDetailsSync } from '../../../hooks/useSessionDetailsSync';
-import { useSessionForm } from '../../../hooks/useSessionForm';
 import type { SessionDetails } from '../types';
 
 import { SessionFormContent } from './SessionFormContent';
+import { SessionFormProvider } from './SessionFormContext';
 import { useCashOutMode } from './useCashOutMode';
 
 interface SessionFormProps {
@@ -39,78 +40,76 @@ export const AddPokerSession: React.FC<SessionFormProps> = ({
   onSubmit,
 }) => {
   const editingSession = useEditingSession(editingSessionId);
+  const today = new Date().toISOString().slice(0, 10);
+  const defaultValues = useMemo<SessionDetails>(() => {
+    return {
+      date: editingSession?.date ?? today,
+      location: editingSession?.location ?? 'Bobs House',
+      game: editingSession?.game ?? 'Big O',
+      stakes: editingSession?.stakes ?? '4-8 Kill',
+    };
+  }, [editingSession, today]);
+  const formMethods = useForm<SessionDetails>({ defaultValues });
+  const { control, reset } = formMethods;
   const {
     isCashOutMode,
     cashOutValues,
     handleCashOutClick,
     handleCashOutChange,
   } = useCashOutMode(currentSessionId, editingSessionId);
-
-  const {
-    date,
-    location,
-    game,
-    stakes,
-    setDate,
-    setLocation,
-    setGame,
-    setStakes,
-  } = useSessionForm({
-    initialDate: editingSession?.date,
-    initialLocation: editingSession?.location,
-    initialGame: editingSession?.game,
-    initialStakes: editingSession?.stakes,
+  useEffect(() => reset(defaultValues), [defaultValues, reset]);
+  const [date, location, game, stakes] = useWatch({
+    control,
+    name: ['date', 'location', 'game', 'stakes'],
   });
-
-  useSessionDetailsSync(date, location, game, stakes, onDetailsChange);
-
+  useSessionDetailsSync(
+    date ?? defaultValues.date,
+    location ?? defaultValues.location,
+    game ?? defaultValues.game,
+    stakes ?? defaultValues.stakes,
+    onDetailsChange,
+  );
   const isEditing = editingSessionId !== null;
-
   const onCashOutButtonClick = () => {
     handleCashOutClick(selectedPlayers);
   };
-
-  const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const details = {
-      date,
-      location: location.trim(),
-      game: game.trim(),
-      stakes: stakes.trim(),
+  const handleValidSubmit = (formValues: SessionDetails) => {
+    const details: SessionDetails = {
+      date: formValues.date,
+      location: formValues.location.trim(),
+      game: formValues.game.trim(),
+      stakes: formValues.stakes.trim(),
     };
     onSubmit(details, cashOutValues);
   };
+  const handleFormSubmit = formMethods.handleSubmit(handleValidSubmit);
 
   return (
     <MainCard>
       <h2 className="mb-6 text-2xl font-bold text-gray-800">
         {isEditing ? 'Edit Poker Session' : 'Add Poker Session'}
       </h2>
-      <form
-        key={editingSessionId ?? 'new'}
-        onSubmit={handleFormSubmit}
-        className="space-y-4"
-      >
-        <SessionFormContent
-          date={date}
-          location={location}
-          game={game}
-          stakes={stakes}
+      <FormProvider {...formMethods}>
+        <SessionFormProvider
           selectedPlayers={selectedPlayers}
           sessionId={editingSessionId ?? currentSessionId}
           isEditing={isEditing}
           isCashOutMode={isCashOutMode}
           cashOutValues={cashOutValues}
-          onDateChange={setDate}
-          onLocationChange={setLocation}
-          onGameChange={setGame}
-          onStakesChange={setStakes}
           onSeatNumberChange={onSeatNumberChange}
           onCashOutChange={handleCashOutChange}
           onCashOutClick={onCashOutButtonClick}
           onCancelEdit={onCancelEdit}
-        />
-      </form>
+        >
+          <form
+            key={editingSessionId ?? 'new'}
+            onSubmit={handleFormSubmit}
+            className="space-y-4"
+          >
+            <SessionFormContent />
+          </form>
+        </SessionFormProvider>
+      </FormProvider>
     </MainCard>
   );
 };

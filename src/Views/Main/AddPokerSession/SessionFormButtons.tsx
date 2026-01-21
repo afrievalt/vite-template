@@ -1,16 +1,9 @@
 import React from 'react';
 
-interface SessionFormButtonsProps {
-  isEditing: boolean;
-  isCashOutMode: boolean;
-  onCancel: () => void;
-}
+import { useSessionFormContext } from './SessionFormContext';
 
-export const SessionFormButtons: React.FC<SessionFormButtonsProps> = ({
-  isEditing,
-  isCashOutMode,
-  onCancel,
-}) => {
+export const SessionFormButtons: React.FC = () => {
+  const { isEditing, isCashOutMode, onCancelEdit } = useSessionFormContext();
   if (!isCashOutMode) {
     return null;
   }
@@ -20,7 +13,7 @@ export const SessionFormButtons: React.FC<SessionFormButtonsProps> = ({
       {isEditing && (
         <button
           type="button"
-          onClick={onCancel}
+          onClick={onCancelEdit}
           className="flex-1 rounded-md bg-gray-600 px-4 py-2 text-white transition-colors hover:bg-gray-700 focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:outline-none"
         >
           Cancel

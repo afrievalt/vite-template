@@ -1,28 +1,18 @@
 import React from 'react';
 
-import type { SessionPlayerSelection } from '../types';
-
 import { SelectedPlayersTable } from './SelectedPlayersTable';
+import { useSessionFormContext } from './SessionFormContext';
 
-interface PlayersSectionProps {
-  selectedPlayers: SessionPlayerSelection[];
-  sessionId: string | null;
-  isCashOutMode: boolean;
-  cashOutValues: Record<string, number>;
-  onSeatNumberChange: (playerId: string, seatNumber: number) => void;
-  onCashOutChange: (playerId: string, value: number) => void;
-  onCashOutClick: () => void;
-}
-
-export const PlayersSection: React.FC<PlayersSectionProps> = ({
-  selectedPlayers,
-  sessionId,
-  isCashOutMode,
-  cashOutValues,
-  onSeatNumberChange,
-  onCashOutChange,
-  onCashOutClick,
-}) => {
+export const PlayersSection: React.FC = () => {
+  const {
+    selectedPlayers,
+    sessionId,
+    isCashOutMode,
+    cashOutValues,
+    onSeatNumberChange,
+    onCashOutChange,
+    onCashOutClick,
+  } = useSessionFormContext();
   return (
     <div className="space-y-2">
       <div className="flex items-center justify-between">

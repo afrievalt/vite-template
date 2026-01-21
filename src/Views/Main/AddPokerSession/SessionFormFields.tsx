@@ -1,27 +1,10 @@
-/* eslint-disable max-lines-per-function */
 import React from 'react';
+import { useFormContext } from 'react-hook-form';
 
-interface SessionFormFieldsProps {
-  date: string;
-  location: string;
-  game: string;
-  stakes: string;
-  onDateChange: (value: string) => void;
-  onLocationChange: (value: string) => void;
-  onGameChange: (value: string) => void;
-  onStakesChange: (value: string) => void;
-}
+import type { SessionDetails } from '../types';
 
-export const SessionFormFields: React.FC<SessionFormFieldsProps> = ({
-  date,
-  location,
-  game,
-  stakes,
-  onDateChange,
-  onLocationChange,
-  onGameChange,
-  onStakesChange,
-}) => {
+export const SessionFormFields: React.FC = () => {
+  const { register } = useFormContext<SessionDetails>();
   return (
     <div className="grid gap-4 md:grid-cols-2">
       <div>
@@ -34,10 +17,9 @@ export const SessionFormFields: React.FC<SessionFormFieldsProps> = ({
         <input
           id="date"
           type="date"
-          value={date}
-          onChange={(event) => onDateChange(event.target.value)}
           className="w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none"
           required
+          {...register('date')}
         />
       </div>
       <div>
@@ -50,11 +32,9 @@ export const SessionFormFields: React.FC<SessionFormFieldsProps> = ({
         <input
           id="location"
           type="text"
-          value={location}
-          onChange={(event) => onLocationChange(event.target.value)}
           className="w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-          placeholder="Casino, home game..."
           required
+          {...register('location')}
         />
       </div>
       <div>
@@ -67,11 +47,9 @@ export const SessionFormFields: React.FC<SessionFormFieldsProps> = ({
         <input
           id="game"
           type="text"
-          value={game}
-          onChange={(event) => onGameChange(event.target.value)}
           className="w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-          placeholder="1/2 NLH, 5/5 PLO..."
           required
+          {...register('game')}
         />
       </div>
       <div>
@@ -84,11 +62,9 @@ export const SessionFormFields: React.FC<SessionFormFieldsProps> = ({
         <input
           id="stakes"
           type="text"
-          value={stakes}
-          onChange={(event) => onStakesChange(event.target.value)}
           className="w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-          placeholder="4-8 Kill..."
           required
+          {...register('stakes')}
         />
       </div>
     </div>
