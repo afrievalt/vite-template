@@ -1,6 +1,6 @@
+import type { SessionRow } from '@store/selectors/sessionsSelectors';
 import React from 'react';
 
-import type { SessionRow } from '../../../store/selectors/sessionsSelectors';
 import { formatDate } from '../../../utils/dateHelper';
 
 interface SessionRowProps {

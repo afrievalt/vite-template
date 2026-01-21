@@ -1,10 +1,10 @@
+import { useAppDispatch, useAppSelector } from '@store/hooks';
+import type { Player } from '@store/slices/playersSlice';
+import { addBuyInToResult } from '@store/slices/resultsSlice';
+import { consumeSelectedSeat } from '@store/slices/seatSkipsSlice';
+import { addSession } from '@store/slices/sessionsSlice';
 import type { Dispatch, SetStateAction } from 'react';
 
-import { useAppDispatch, useAppSelector } from '../store/hooks';
-import type { Player } from '../store/slices/playersSlice';
-import { addBuyInToResult } from '../store/slices/resultsSlice';
-import { consumeSelectedSeat } from '../store/slices/seatSkipsSlice';
-import { addSession } from '../store/slices/sessionsSlice';
 import { generateUUID } from '../utils/uuid';
 import type {
   SessionDetails,

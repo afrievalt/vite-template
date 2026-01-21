@@ -21,3 +21,5 @@ alwaysApply: true
 
 - pass all linting rules
 - always run linter as last step and fix any issues
+
+- don't use '../../*" on imports, use '@hooks/*'

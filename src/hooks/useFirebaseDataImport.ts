@@ -1,8 +1,8 @@
+import { importStore } from '@store/slices/sessionsSlice';
+import type { RootState } from '@store/store';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { importStore } from '../store/slices/sessionsSlice';
-import type { RootState } from '../store/store';
 import { fetchStoreFromFirebase } from '../utils/firebaseSync';
 
 import { useFirebaseAuth } from './useFirebaseAuth';

@@ -1,7 +1,6 @@
+import { useAppDispatch } from '@store/hooks';
+import { addBuyInToResult } from '@store/slices/resultsSlice';
 import React, { useState } from 'react';
-
-import { useAppDispatch } from '../../../store/hooks';
-import { addBuyInToResult } from '../../../store/slices/resultsSlice';
 
 interface RebuyDialogProps {
   isOpen: boolean;

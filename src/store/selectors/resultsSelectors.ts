@@ -1,6 +1,5 @@
 import { createSelector } from '@reduxjs/toolkit';
-
-import type { RootState } from '../store';
+import type { RootState } from '@store/store';
 
 export const selectTotalBuyInsByPlayerAndSession = createSelector(
   [(state: RootState) => state.results.results],

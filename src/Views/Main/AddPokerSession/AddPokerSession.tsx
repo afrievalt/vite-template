@@ -1,9 +1,10 @@
+/* eslint-disable max-lines-per-function */
+import { MainCard } from '@components/MainCard';
+import { useEditingSession } from '@hooks/useEditingSession';
+import { useSessionDetailsSync } from '@hooks/useSessionDetailsSync';
 import React, { useEffect, useMemo } from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 
-import { MainCard } from '../../../components/MainCard';
-import { useEditingSession } from '../../../hooks/useEditingSession';
-import { useSessionDetailsSync } from '../../../hooks/useSessionDetailsSync';
 import type { SessionDetails } from '../types';
 
 import { SessionFormContent } from './SessionFormContent';

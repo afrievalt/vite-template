@@ -1,13 +1,13 @@
-import React, { useRef } from 'react';
-
-import { MainCard } from '../../../components/MainCard';
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
-import { selectSessionRows } from '../../../store/selectors/sessionsSelectors';
+import { MainCard } from '@components/MainCard';
+import { useAppDispatch, useAppSelector } from '@store/hooks';
+import { selectSessionRows } from '@store/selectors/sessionsSelectors';
 import {
   importStore as importStoreAction,
   removeSession,
-} from '../../../store/slices/sessionsSlice';
-import { store } from '../../../store/store';
+} from '@store/slices/sessionsSlice';
+import { store } from '@store/store';
+import React, { useRef } from 'react';
+
 import { syncStoreWithFirebase } from '../../../utils/firebaseSync';
 import { exportStore, importStore } from '../../../utils/sessionImportExport';
 

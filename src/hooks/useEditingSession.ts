@@ -1,4 +1,4 @@
-import { useAppSelector } from '../store/hooks';
+import { useAppSelector } from '@store/hooks';
 
 export const useEditingSession = (editingSessionId: string | null) => {
   const sessions = useAppSelector((state) => state.sessions.sessions);

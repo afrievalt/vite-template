@@ -1,6 +1,6 @@
+import type { Player } from '@store/slices/playersSlice';
 import type { Dispatch, SetStateAction } from 'react';
 
-import type { Player } from '../store/slices/playersSlice';
 import type {
   SessionDetails,
   SessionPlayerSelection,

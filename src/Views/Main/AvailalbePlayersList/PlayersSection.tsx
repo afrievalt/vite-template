@@ -1,9 +1,9 @@
+import { MainCard } from '@components/MainCard';
+import { useAppDispatch, useAppSelector } from '@store/hooks';
+import { addPlayer, type Player } from '@store/slices/playersSlice';
+import { selectSeat, skipSeat } from '@store/slices/seatSkipsSlice';
 import React, { useState } from 'react';
 
-import { MainCard } from '../../../components/MainCard';
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
-import { addPlayer, type Player } from '../../../store/slices/playersSlice';
-import { selectSeat, skipSeat } from '../../../store/slices/seatSkipsSlice';
 import { generateUUID } from '../../../utils/uuid';
 
 import { PlayersForm } from './PlayersForm';

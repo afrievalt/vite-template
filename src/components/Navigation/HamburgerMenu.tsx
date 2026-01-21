@@ -1,7 +1,7 @@
+import { useFirebaseAuth } from '@hooks/useFirebaseAuth';
 import type { User } from 'firebase/auth';
 import React, { useState } from 'react';
 
-import { useFirebaseAuth } from '../../hooks/useFirebaseAuth';
 import {
   signInWithGoogle,
   signOutFromFirebase,

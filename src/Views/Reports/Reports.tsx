@@ -1,9 +1,8 @@
+import { MainCard } from '@components/MainCard';
+import { useAppSelector } from '@store/hooks';
+import { selectSessionRows } from '@store/selectors/sessionsSelectors';
+import type { SessionRow } from '@store/selectors/sessionsSelectors';
 import React, { useMemo, useState } from 'react';
-
-import { MainCard } from '../../components/MainCard';
-import { useAppSelector } from '../../store/hooks';
-import { selectSessionRows } from '../../store/selectors/sessionsSelectors';
-import type { SessionRow } from '../../store/selectors/sessionsSelectors';
 
 const GameFilter: React.FC<{
   selectedGame: string;

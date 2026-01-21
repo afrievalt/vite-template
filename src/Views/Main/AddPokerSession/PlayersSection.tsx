@@ -1,7 +1,7 @@
+import { useSessionFormContext } from '@hooks/useSessionFormContext';
 import React from 'react';
 
 import { SelectedPlayersTable } from './SelectedPlayersTable';
-import { useSessionFormContext } from './SessionFormContext';
 
 export const PlayersSection: React.FC = () => {
   const {

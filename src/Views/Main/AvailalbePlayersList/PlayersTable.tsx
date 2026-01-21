@@ -1,9 +1,8 @@
 /* eslint-disable max-lines-per-function */
+import { useAppSelector } from '@store/hooks';
+import { selectTotalWinningsByPlayer } from '@store/selectors/resultsSelectors';
+import type { Player } from '@store/slices/playersSlice';
 import React, { useEffect, useState } from 'react';
-
-import { useAppSelector } from '../../../store/hooks';
-import { selectTotalWinningsByPlayer } from '../../../store/selectors/resultsSelectors';
-import type { Player } from '../../../store/slices/playersSlice';
 
 interface PlayersTableProps {
   players: Player[];

@@ -1,7 +1,7 @@
+import { useAppDispatch } from '@store/hooks';
+import { addBuyInToResult } from '@store/slices/resultsSlice';
 import type { Dispatch, SetStateAction } from 'react';
 
-import { useAppDispatch } from '../store/hooks';
-import { addBuyInToResult } from '../store/slices/resultsSlice';
 import type { SessionPlayerSelection } from '../Views/Main/types';
 
 interface UseSessionPlayerEditsConfig {

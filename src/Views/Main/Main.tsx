@@ -1,8 +1,7 @@
+import { useFirebaseDataImport } from '@hooks/useFirebaseDataImport';
+import { useSessionPlayers } from '@hooks/useSessionPlayers';
+import { useSessionSubmit } from '@hooks/useSessionSubmit';
 import React, { useCallback, useState } from 'react';
-
-import { useFirebaseDataImport } from '../../hooks/useFirebaseDataImport';
-import { useSessionPlayers } from '../../hooks/useSessionPlayers';
-import { useSessionSubmit } from '../../hooks/useSessionSubmit';
 
 import { AddPokerSession } from './AddPokerSession/AddPokerSession';
 import { PlayersSection } from './AvailalbePlayersList/PlayersSection';

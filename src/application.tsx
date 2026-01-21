@@ -1,7 +1,7 @@
+import { HamburgerMenu } from '@components/Navigation/HamburgerMenu';
+import { SignInStatus } from '@components/Navigation/SignInStatus';
 import { useState } from 'react';
 
-import { HamburgerMenu } from './components/Navigation/HamburgerMenu';
-import { SignInStatus } from './components/Navigation/SignInStatus';
 import Main from './Views/Main/Main';
 import Reports from './Views/Reports/Reports';
 

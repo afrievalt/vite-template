@@ -1,7 +1,7 @@
+import { MainCard } from '@components/MainCard';
+import { useFirebaseAuth } from '@hooks/useFirebaseAuth';
 import React from 'react';
 
-import { MainCard } from '../../components/MainCard';
-import { useFirebaseAuth } from '../../hooks/useFirebaseAuth';
 import {
   signInWithGoogle,
   signOutFromFirebase,

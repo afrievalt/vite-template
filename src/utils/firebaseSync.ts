@@ -1,7 +1,6 @@
+import type { RootState } from '@store/store';
 import { getDatabase, ref, set, get } from 'firebase/database';
 import type { Database } from 'firebase/database';
-
-import type { RootState } from '../store/store';
 
 import { app } from './firebase-init';
 import { auth } from './firebaseAuth';

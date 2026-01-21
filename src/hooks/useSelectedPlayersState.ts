@@ -1,11 +1,11 @@
-import type { Dispatch, SetStateAction } from 'react';
-import { useEffect, useState } from 'react';
-
-import { useAppDispatch, useAppSelector } from '../store/hooks';
+import { useAppDispatch, useAppSelector } from '@store/hooks';
 import {
   initializeSeatSkips,
   resetSeatSkips,
-} from '../store/slices/seatSkipsSlice';
+} from '@store/slices/seatSkipsSlice';
+import type { Dispatch, SetStateAction } from 'react';
+import { useEffect, useState } from 'react';
+
 import type { SessionPlayerSelection } from '../Views/Main/types';
 
 interface UseSelectedPlayersStateConfig {

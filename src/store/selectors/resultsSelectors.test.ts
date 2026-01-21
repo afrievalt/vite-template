@@ -1,7 +1,6 @@
 /* eslint-disable max-lines-per-function */
+import type { RootState } from '@store/store';
 import { describe, expect, test } from 'vitest';
-
-import type { RootState } from '../store';
 
 import {
   selectCalculatedResultForPlayer,

@@ -1,6 +1,6 @@
-import type { Result } from '../store/slices/resultsSlice';
-import type { Session } from '../store/slices/sessionsSlice';
-import type { RootState } from '../store/store';
+import type { Result } from '@store/slices/resultsSlice';
+import type { Session } from '@store/slices/sessionsSlice';
+import type { RootState } from '@store/store';
 
 export interface SessionExportData {
   sessions: Session[];

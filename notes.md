@@ -6,7 +6,6 @@
 
 [] auto fix on save
 [] remove prop drilling
-[] add form lib
 [] add db for testing
 
 [] Add pick game drop down w/ new
@@ -19,6 +18,7 @@
 
 [] handle seat move.
 
+[x] add form lib
 [x] create a skip
 [x] data entry
 [x] reports (filter by game)

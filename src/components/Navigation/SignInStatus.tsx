@@ -1,6 +1,5 @@
+import { useFirebaseAuth } from '@hooks/useFirebaseAuth';
 import React from 'react';
-
-import { useFirebaseAuth } from '../../hooks/useFirebaseAuth';
 
 export const SignInStatus: React.FC = () => {
   const { user, initializing, content } = useFirebaseAuth();

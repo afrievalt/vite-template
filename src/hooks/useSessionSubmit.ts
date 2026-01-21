@@ -1,7 +1,8 @@
-import { useAppDispatch } from '../store/hooks';
-import { updateSessionResults } from '../store/slices/resultsSlice';
-import { updateSession } from '../store/slices/sessionsSlice';
-import { store } from '../store/store';
+import { useAppDispatch } from '@store/hooks';
+import { updateSessionResults } from '@store/slices/resultsSlice';
+import { updateSession } from '@store/slices/sessionsSlice';
+import { store } from '@store/store';
+
 import { syncStoreWithFirebase } from '../utils/firebaseSync';
 import type {
   SessionDetails,
