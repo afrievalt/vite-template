@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { MainCard } from '../../../components/MainCard';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { addPlayer, type Player } from '../../../store/slices/playersSlice';
+import { selectSeat, skipSeat } from '../../../store/slices/seatSkipsSlice';
 import { generateUUID } from '../../../utils/uuid';
 
 import { PlayersForm } from './PlayersForm';
@@ -19,6 +20,7 @@ export const PlayersSection: React.FC<PlayersSectionProps> = ({
 }) => {
   const dispatch = useAppDispatch();
   const players = useAppSelector((state) => state.players.players);
+  const seatSkips = useAppSelector((state) => state.seatSkips);
   const [name, setName] = useState<string>('');
   const [description, setDescription] = useState<string>('');
 
@@ -51,6 +53,11 @@ export const PlayersSection: React.FC<PlayersSectionProps> = ({
         onNameChange={setName}
         onDescriptionChange={setDescription}
         onAdd={handleAddPlayer}
+        skippedSeats={seatSkips.skippedSeats}
+        nextSeatNumber={seatSkips.nextSeatNumber}
+        selectedSeatNumber={seatSkips.selectedSeatNumber}
+        onSkipSeat={() => dispatch(skipSeat())}
+        onSeatSelect={(seatNumber) => dispatch(selectSeat(seatNumber))}
       />
       <div className="mt-4">
         <PlayersTable players={availablePlayers} onAdd={onAddToSession} />

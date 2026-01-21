@@ -42,7 +42,13 @@ export interface ImportResult {
 }
 
 const validateFullStoreState = (state: RootState): boolean => {
-  return !!(state.sessions && state.results && state.players && state.counter);
+  return !!(
+    state.sessions &&
+    state.results &&
+    state.players &&
+    state.counter &&
+    state.seatSkips
+  );
 };
 
 const parseFullStore = (data: StoreExportData): ImportResult => {
@@ -60,6 +66,11 @@ const parseLegacyFormat = (data: SessionExportData): ImportResult => {
         results: { results: [] },
         players: { players: [] },
         counter: { value: 0 },
+        seatSkips: {
+          skippedSeats: [],
+          nextSeatNumber: 1,
+          selectedSeatNumber: 1,
+        },
       } as RootState,
       isFullStore: false,
     };
@@ -70,6 +81,7 @@ const parseLegacyFormat = (data: SessionExportData): ImportResult => {
       results: { results: data.results },
       players: { players: [] },
       counter: { value: 0 },
+      seatSkips: { skippedSeats: [], nextSeatNumber: 1, selectedSeatNumber: 1 },
     } as RootState,
     isFullStore: false,
   };

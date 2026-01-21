@@ -35,8 +35,12 @@ export const SelectedPlayersTable: React.FC<SelectedPlayersTableProps> = ({
     }
     return buyInsBySession[sessionId] ?? {};
   }, [buyInsBySession, sessionId]);
+  const orderedPlayers = useMemo(
+    () => [...players].sort((a, b) => a.seatNumber - b.seatNumber),
+    [players],
+  );
 
-  if (players.length === 0) {
+  if (orderedPlayers.length === 0) {
     return <p className="text-sm text-gray-500">No players selected.</p>;
   }
 
@@ -63,7 +67,7 @@ export const SelectedPlayersTable: React.FC<SelectedPlayersTableProps> = ({
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200 bg-white">
-            {players.map((player) => (
+            {orderedPlayers.map((player) => (
               <PlayerTableRow
                 key={player.playerId}
                 player={player}

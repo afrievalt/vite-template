@@ -1,6 +1,6 @@
-[] fix saved sessions report format
 [] fix edit (allow edit of rebuy)
-[] create a skip
+
+[] fix bug, session created and never saved, todo: add a new slice for current session.
 
 [] fix ../../component import
 
@@ -15,8 +15,17 @@
 [] improve reports
 [] secure firebase
 
+[] refactor skip seat. Use form lib. Move available array to current session. (What to do during edit?)
+
+[] handle seat move.
+
+[x] create a skip
 [x] data entry
 [x] reports (filter by game)
 [x] use firebase data
 [x] remove card / margin in mobile
 [x] move signout to hamburger menu
+[x] fix saved sessions report format
+
+New app idea:
+CAll the hand flash cards BigO h

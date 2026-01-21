@@ -18,6 +18,7 @@ const createMockState = (
   counter: { value: 0 },
   players: { players: [] },
   results: { results },
+  seatSkips: { skippedSeats: [], nextSeatNumber: 1, selectedSeatNumber: 1 },
   sessions: { sessions },
 });
 

@@ -7,6 +7,8 @@ import playersReducer from './slices/playersSlice';
 import type { PlayersState } from './slices/playersSlice';
 import resultsReducer from './slices/resultsSlice';
 import type { ResultsState } from './slices/resultsSlice';
+import seatSkipsReducer from './slices/seatSkipsSlice';
+import type { SeatSkipsState } from './slices/seatSkipsSlice';
 import sessionsReducer from './slices/sessionsSlice';
 import type { SessionsState } from './slices/sessionsSlice';
 
@@ -22,6 +24,11 @@ export const store = configureStore({
       ResultsState,
       UnknownAction,
       ResultsState | undefined
+    >,
+    seatSkips: seatSkipsReducer as Reducer<
+      SeatSkipsState,
+      UnknownAction,
+      SeatSkipsState | undefined
     >,
     sessions: sessionsReducer as Reducer<
       SessionsState,

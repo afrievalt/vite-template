@@ -144,6 +144,11 @@ export const selectTotalWinningsByPlayer = createSelector(
       results: { results },
       players: { players: [] },
       counter: { value: 0 },
+      seatSkips: {
+        skippedSeats: [],
+        nextSeatNumber: 1,
+        selectedSeatNumber: 1,
+      },
     } as RootState;
 
     for (const session of sessions) {
