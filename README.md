@@ -41,7 +41,45 @@ npm install
 
 ### 3. Configure Firebase
 
-Update the Firebase configuration in `src/utils/firebase-init.tsx` with your own project credentials from the Firebase Console.
+#### a) Set up environment variables
+
+Create a `.env` file in the project root (you can copy `.env.example` as a starting point):
+
+```bash
+cp .env.example .env
+```
+
+Then update the `.env` file with your own Firebase project credentials from the Firebase Console:
+
+```
+VITE_FIREBASE_API_KEY=your_api_key_here
+VITE_FIREBASE_AUTH_DOMAIN=your_auth_domain_here
+VITE_FIREBASE_DATABASE_URL=your_database_url_here
+VITE_FIREBASE_PROJECT_ID=your_project_id_here
+VITE_FIREBASE_STORAGE_BUCKET=your_storage_bucket_here
+VITE_FIREBASE_MESSAGING_SENDER_ID=your_messaging_sender_id_here
+VITE_FIREBASE_APP_ID=your_app_id_here
+```
+
+**Note**: Never commit your `.env` file to version control. It's already included in `.gitignore`.
+
+#### b) Set up Firebase CLI configuration
+
+Create a `.firebaserc` file (you can copy `.firebaserc.example` as a starting point):
+
+```bash
+cp .firebaserc.example .firebaserc
+```
+
+Then update it with your Firebase project ID:
+
+```json
+{
+  "projects": {
+    "default": "your-firebase-project-id"
+  }
+}
+```
 
 ### 4. Start developing
 
@@ -78,5 +116,7 @@ The template uses path aliases for cleaner imports (configured in `tsconfig.app.
 - `npm run test`: Run unit tests
 - `npm run lint`: Run linter
 - `npm run storybook`: Start Storybook
+
+---
 
 ---

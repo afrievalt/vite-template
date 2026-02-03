@@ -5,13 +5,13 @@ import { initializeApp } from 'firebase/app';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: 'AIzaSyCwBaIiU27Nya8oy74UWtEzoimINaQVz9I',
-  authDomain: 'fir-deploy-test-defe8.firebaseapp.com',
-  databaseURL: 'https://fir-deploy-test-defe8.firebaseio.com',
-  projectId: 'fir-deploy-test-defe8',
-  storageBucket: 'fir-deploy-test-defe8.firebasestorage.app',
-  messagingSenderId: '517470912893',
-  appId: '1:517470912893:web:8b0f40825635a9929e8c14',
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  databaseURL: import.meta.env.VITE_FIREBASE_DATABASE_URL,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
 };
 
 // Initialize Firebase
