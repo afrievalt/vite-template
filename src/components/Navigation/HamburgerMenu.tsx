@@ -7,38 +7,23 @@ import {
   signOutFromFirebase,
 } from '../../utils/firebaseAuth';
 
-interface HamburgerMenuProps {
-  onNavigate: (view: 'Main' | 'Reports') => void;
-  currentView: 'Main' | 'Reports';
+interface MenuDropdownProps {
+  user: User | null;
+  onSignIn: () => Promise<void>;
+  onSignOut: () => Promise<void>;
 }
 
-const MenuDropdown: React.FC<{
-  currentView: 'Main' | 'Reports';
-  user: User | null;
-  onNavigate: (view: 'Main' | 'Reports') => void;
-  onSignIn: () => void;
-  onSignOut: () => void;
-}> = ({ currentView, user, onNavigate, onSignIn, onSignOut }) => (
+const MenuDropdown: React.FC<MenuDropdownProps> = ({
+  user,
+  onSignIn,
+  onSignOut,
+}) => (
   <div className="ring-opacity-5 absolute right-0 z-50 mt-2 w-48 rounded-md bg-white py-1 shadow-lg ring-1 ring-black">
     <button
-      onClick={() => onNavigate('Main')}
-      className={`block w-full px-4 py-2 text-left text-sm ${
-        currentView === 'Main'
-          ? 'bg-gray-100 font-bold'
-          : 'text-gray-700 hover:bg-gray-50'
-      }`}
+      className="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50"
+      onClick={() => alert('Home clicked')}
     >
-      Main
-    </button>
-    <button
-      onClick={() => onNavigate('Reports')}
-      className={`block w-full px-4 py-2 text-left text-sm ${
-        currentView === 'Reports'
-          ? 'bg-gray-100 font-bold'
-          : 'text-gray-700 hover:bg-gray-50'
-      }`}
-    >
-      Reports
+      Home
     </button>
     <div className="my-1 border-t border-gray-100" />
     {user ? (
@@ -59,10 +44,7 @@ const MenuDropdown: React.FC<{
   </div>
 );
 
-export const HamburgerMenu: React.FC<HamburgerMenuProps> = ({
-  onNavigate,
-  currentView,
-}) => {
+export const HamburgerMenu: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { user } = useFirebaseAuth();
 
@@ -110,12 +92,7 @@ export const HamburgerMenu: React.FC<HamburgerMenuProps> = ({
 
       {isOpen && (
         <MenuDropdown
-          currentView={currentView}
           user={user}
-          onNavigate={(view) => {
-            onNavigate(view);
-            setIsOpen(false);
-          }}
           onSignIn={handleSignIn}
           onSignOut={handleSignOut}
         />

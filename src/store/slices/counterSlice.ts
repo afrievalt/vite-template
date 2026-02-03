@@ -1,8 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
-import { importStore } from './sessionsSlice';
-
 interface CounterState {
   value: number;
 }
@@ -27,13 +25,6 @@ const counterSlice = createSlice({
     importCounter: (state, action: PayloadAction<number>) => {
       state.value = action.payload;
     },
-  },
-  extraReducers: (builder) => {
-    builder.addCase(importStore, (state, action) => {
-      if (action.payload.isFullStore) {
-        state.value = action.payload.state.counter.value;
-      }
-    });
   },
 });
 
