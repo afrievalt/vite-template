@@ -2,18 +2,22 @@ import { useAppDispatch, useAppSelector } from '@store/hooks';
 import { decrement, increment } from '@store/slices/counterSlice';
 import React from 'react';
 
+import { CountdownTimer } from './CountdownTimer';
+
 export const Home: React.FC = () => {
   const count = useAppSelector((state) => state.counter.value);
   const dispatch = useAppDispatch();
 
   return (
-    <div className="flex flex-col items-center justify-center p-8">
+    <div className="flex flex-col items-center justify-center gap-8 p-8">
       <h1 className="mb-6 text-3xl font-bold text-gray-800">
         Welcome to your Vite Template
       </h1>
       <p className="mb-8 text-gray-600">
         This template is pre-configured with React, Redux, and Firebase.
       </p>
+
+      <CountdownTimer />
 
       <div className="flex flex-col items-center gap-4 rounded-lg bg-white p-6 shadow-md">
         <h2 className="text-xl font-semibold">Counter Example</h2>

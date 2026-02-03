@@ -4,4 +4,5 @@ globs: ["src/**/*.tsx"]
 alwaysApply: true
 ---
 
+- when created a form always use react-hook-form with zod
 - don't use placeholders attribute
