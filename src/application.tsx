@@ -1,6 +1,6 @@
 import { HamburgerMenu } from '@components/Navigation/HamburgerMenu';
 import { SignInStatus } from '@components/Navigation/SignInStatus';
-import React from 'react';
+import { Route, Routes } from 'react-router-dom';
 
 import Home from './Views/Home/Home';
 
@@ -19,7 +19,9 @@ export const Application = () => {
         </div>
       </nav>
       <main className="mx-auto max-w-2xl">
-        <Home />
+        <Routes>
+          <Route path="/" element={<Home />} />
+        </Routes>
       </main>
     </div>
   );

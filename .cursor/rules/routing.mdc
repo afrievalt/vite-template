@@ -1,0 +1,12 @@
+---
+description: "Use URL for modals and selected-item state"
+globs: ["src/*.*"]
+alwaysApply: true
+---
+
+- Prefer react-router over useState for UI state that represents "what is open" or "what is selected".
+- For dialogs or modals that show a single selected entity (e.g. player detail, item detail), drive visibility and selection from the URL:
+  - Use search params (e.g. `?playerId=...`) with `useSearchParams()` for same-page overlays.
+  - Use route params (e.g. `/items/:id`) when the detail is a full page.
+- Avoid `useState` for "selected item" or "dialog open" when that state could be encoded in the URL; use `useSearchParams` or `useParams` and navigate on open/close instead.
+- Benefits: back/forward work, shareable links, no redundant state.

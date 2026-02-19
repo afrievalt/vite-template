@@ -51,6 +51,18 @@ cp .env.example .env
 
 Then update the `.env` file with your own Firebase project credentials from the Firebase Console:
 
+Find an Existing API Key
+To find the auto-generated API key:
+Go to the Firebase console.
+Select your project.
+Click the gear icon (Settings) next to "Project overview", then select Project settings.
+In the General tab, scroll down to the "Your apps" section.
+Select your app's platform (iOS, Android, or Web). The API key is part of the configuration information:
+Web apps: The key is listed as apiKey in the Firebase config object.
+Android apps: The key is in the current_key field within the google-services.json file.
+Apple apps: The key is in the API_KEY field within the GoogleService-Info.plist file.
+The "Web API Key" field is also visible directly in the General tab, which is a key shared by all web apps in the project.
+
 ```
 VITE_FIREBASE_API_KEY=your_api_key_here
 VITE_FIREBASE_AUTH_DOMAIN=your_auth_domain_here

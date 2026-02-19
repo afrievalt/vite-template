@@ -1,0 +1,13 @@
+---
+description: "Avoid useState; prefer Redux, react-router, react-hook-form"
+globs: ["src/**/*.tsx", "src/**/*.ts"]
+alwaysApply: true
+---
+
+# State and forms
+
+- Avoid `useState`. Prefer these instead:
+  - **Redux** (e.g. `useSelector`, `useDispatch`) for app and domain state shared across the tree or that must persist.
+  - **react-router** (e.g. `useSearchParams`, `useParams`, `useNavigate`) for state that belongs in the URL (selected id, filters, modal open).
+  - **react-hook-form** for form state and validation; use `register`, `control`, `watch`, `handleSubmit` instead of local state per field.
+- Reserve `useState` only for truly local, ephemeral UI state that is not URL, form, or global (e.g. a single component’s toggle that is not reflected in the URL).
