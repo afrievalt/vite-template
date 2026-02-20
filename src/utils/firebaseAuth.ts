@@ -7,7 +7,7 @@ import {
 
 import { app } from './firebase-init';
 
-export const auth = getAuth(app);
+export const auth = app && getAuth(app);
 const googleProvider = new GoogleAuthProvider();
 
 export const signInWithGoogle = async (): Promise<void> => {

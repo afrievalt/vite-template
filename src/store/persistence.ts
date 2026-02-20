@@ -21,7 +21,7 @@ const safeParse = (raw: string): PersistedState | undefined => {
   }
 };
 
-export const loadPersistedState = (): Partial<PersistedState> | undefined => {
+export const loadPersistedState = (): PersistedState | undefined => {
   if (typeof localStorage === 'undefined') {
     return undefined;
   }
